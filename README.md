@@ -36,7 +36,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Folders
 
-- `src/` - Source files for the root-level application project.
 - `src/app` - Contains the component files in which your application logic and data defined.
 - `src/app/core` - This module is for classes used by file `app.module.ts`. Resources which are always loaded such as route guards, HTTP interceptors, and application level services.
 - `src/app/modules` - The module directory contains a collection of modules have its own routing which is a `loadChildren` route resource defined in the `AppRoutingModule`.
