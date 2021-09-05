@@ -20,6 +20,11 @@
   justify-content: space-between;
 }
 
+.navbar-right a{
+  cursor: pointer;
+  outline: none;
+}
+
 .mat-toolbar {
   background: white;
   position: fixed;

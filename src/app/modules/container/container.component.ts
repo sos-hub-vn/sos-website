@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/core/services/dialog.service';
+import { StorageService } from 'src/app/core/services/storage.service';
+import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-container',
@@ -9,7 +13,11 @@ export class ContainerComponent implements OnInit {
   showFiller = true;
   sideItems: SideItem[] | undefined;
 
-  constructor() {}
+  constructor(
+    private dialogService: DialogService,
+    private notification: NotificationService,
+    private storage: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.sideItems = [
@@ -39,6 +47,12 @@ export class ContainerComponent implements OnInit {
         url: 'manage',
       },
     ];
+  }
+
+  loginPopup(){
+    this.dialogService.openDialog(LoginFrameComponent, {panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px'})
+    // this.notification.info("huhu");
+    // this.notification.error("huhu");
   }
 }
 type SideItem = {
