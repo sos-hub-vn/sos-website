@@ -176,3 +176,8 @@
     }
   }
 }
+
+::ng-deep .mat-dialog-container {
+  background: unset !important;
+  box-shadow: unset !important;
+}
