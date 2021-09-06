@@ -4,18 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { RestService } from './rest.service';
-import { SessionState } from './authen.service';
-const notSignedInMessage = `Not signed in`;
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService extends RestService<IUser> {
-  public host: string;
   constructor(http: HttpClient, private StorageService: StorageService) {
     super(http, 'users');
-    this.host = environment.host;
   }
 
   confirm(body: IUser, options: any): Observable<any> {

@@ -58,38 +58,38 @@ export class UserSignupComponent implements OnInit {
       switch (el) {
         case 'phone':
           if (this.firstFormGroup.get('phone_number')?.hasError('required')) {
-          return 'Phone number required';
+          return 'Yêu cầu nhập số điện thoại';
         }
         if (this.firstFormGroup.get('phone_number')?.hasError('minlength')) {
-          return 'phone number at least 10 characters';
+          return 'Số điện thoại tối thiểu 10 chữ số';
         }
-        if (this.isPhoneInUsed) return "Phone number in used";
+        if (this.isPhoneInUsed) return "Số điện thoại đã được sử dụng";
         return "";
         break;
       case 'password':
         if (this.firstFormGroup.get('password')?.hasError('required')) {
-          return 'Password required';
+          return 'Yêu cầu nhập mật khẩu';
         }
         if (this.firstFormGroup.get('password')?.hasError('minlength')) {
-          return 'Password must at least 8 characters';
+          return 'Mật khẩu phải chứa tối thiểu 8 kí tự';
         }
         return '';
         break;
       case 'confirm_password':
         if (this.firstFormGroup.get('confirm_password')?.hasError('required')) {
-          return 'confirm_password required';
+          return 'Yêu cầu nhập lại mật khẩu xác thực';
         }
         if (this.firstFormGroup.get('confirm_password')?.hasError('minlength')) {
-          return 'confirm_password must at least 8 characters';
+          return 'Mật khẩu xác thực phải chứa tối thiểu 8 kí tự';
         }
         if (this.firstFormGroup.get('confirm_password')?.value != this.firstFormGroup.get('password')?.value) {
-          return 'Confirm password does not match';
+          return 'Mật khẩu xác thực không trùng khớp';
         }
-        return 'ssss';
+        return '';
         break;
       case 'confirm_code':
         if (this.secondFormGroup.get('confirm_code')?.hasError('required')) {
-          return 'Confirm code required';
+          return 'Yêu cầu nhập mã xác nhận';
         }
         return '';
         break;
@@ -99,7 +99,7 @@ export class UserSignupComponent implements OnInit {
   }
 
   AccountSetupSubmit(user: IUser) {
-    console.log(user);
+  
 
     this.UsersService.create({ phone_number: user.phone_number, password: user.password, debug: "true" }, {}).subscribe(
       (result) => {
