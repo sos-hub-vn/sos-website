@@ -32,3 +32,8 @@ body {
 .style-3::-webkit-scrollbar-thumb {
   background-color: orangered;
 }
+
+.mat-dialog-container {
+  background: unset !important;
+  box-shadow: unset !important;
+}
