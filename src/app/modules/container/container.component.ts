@@ -1,6 +1,9 @@
+import { UserLoginComponent } from './../user-login/user-login.component';
+import { UserSignupComponent } from './../user-signup/user-signup.component';
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-container',
@@ -10,13 +13,23 @@ import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login
 export class ContainerComponent implements OnInit {
   showFiller = true;
   sideItems: SideItem[] | undefined;
-
   constructor(
     private dialogService: DialogService,
+    public dialog: MatDialog
   ) {
     if(window.innerWidth <= 768){
       this.showFiller = false;
     }
+  }
+  
+  openSignupDialog(): void {
+    const dialogRef = this.dialog.open(UserSignupComponent, {
+      panelClass: 'dialog-responsive',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   ngOnInit(): void {
@@ -65,3 +78,7 @@ type SideItem = {
   icon: string;
   url: string;
 };
+
+function openSignupDialog() {
+  throw new Error('Function not implemented.');
+}
