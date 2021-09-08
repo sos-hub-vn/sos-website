@@ -50,7 +50,7 @@
       </div>
       <div class="logg" *ngIf="loginSuccess">
         <img src="{{ !isAvatar ? 'assets/icon-logo.png' : this.userInfor.avatar}}" alt="">
-        <p (click)="logout()">ĐĂNG XUẤT</p>
+        <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
       </div>
       <p><span>Hotline:</span><a href="tel:18009999">18009999</a></p>
       <p><span>Email:</span> <a href="mailto:info@sos.vn">info@sos.vn</a></p>

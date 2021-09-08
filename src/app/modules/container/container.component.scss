@@ -213,6 +213,7 @@
     }
     .logg{
       display: flex;
+      align-items: center;
       margin-bottom: 20px;
       p{
         border: 1px solid rgba($color: #E11900, $alpha: .6);
