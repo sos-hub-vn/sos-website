@@ -56,6 +56,6 @@
   </div>
 
   <div class="request_items">
-    <app-request-container type='half-width' [requests]='requests'></app-request-container>
+    <app-request-container (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
   </div>
 </div>

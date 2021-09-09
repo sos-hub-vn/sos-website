@@ -19,40 +19,13 @@ import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 })
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
-  userCreatedRequests: ISOSRequest[] = [];
-  joinedRequests: ISOSRequest[] = [];
-  groupSuggested: ISOSRequest[] = [];
+
+
   user: any;
   constructor(
     public dialog: MatDialog,
-    private UrgentRequestService: UrgentRequestService,
-    private SupportTypesService: SupportTypesService,
-    private RequesterObjectStatusService: RequesterObjectStatusService,
     private StorageService: StorageService
-  ) {}
-  fetchInit() {
-    this.UrgentRequestService.findAll().subscribe((result) => {
-      this.requests = result;
-      console.log(result);
-    });
-    if (this.user != null) {
-      this.UrgentRequestService.getByRequesterId(this.user.id).subscribe((result) => {
-        this.userCreatedRequests = result;
-        console.log(result);
-      });
-      this.UrgentRequestService.getJoinedRequests(this.user.id).subscribe((result) => {
-        this.joinedRequests = result;
-        console.log(result);
-      });
-      this.user.groups.forEach((group: any) => {
-        this.UrgentRequestService.getJoinedRequests(group.id).subscribe((result) => {
-          this.groupSuggested = [...this.groupSuggested, ...result]
-          console.log(result);
-        });
-      });
-
-    }
-  }
+  ) { }
   openCreateForm(): void {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
@@ -66,6 +39,6 @@ export class UrgentRequestComponent implements OnInit {
   }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
-    this.fetchInit();
+
   }
 }

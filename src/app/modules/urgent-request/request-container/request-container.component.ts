@@ -14,11 +14,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RequestContainerComponent implements OnInit {
   @Input() requests?: ISOSRequest[];
+  @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
   urgentLevels: IPriorityType[] = [];
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
+  params: IQueryPrams = {}
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -29,6 +31,7 @@ export class RequestContainerComponent implements OnInit {
     status: [],
     support_types: [],
   };
+  queryObject: any = {};
   constructor(
     private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
@@ -41,6 +44,14 @@ export class RequestContainerComponent implements OnInit {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
   }
+  paramsInit() {
+    this.params = { limit: 20, offset: 0 }
+  }
+  updateParams(returnNumber: number) {
+    console.log("returnNumber: ", returnNumber);
+    if (returnNumber < 20) this.params.limit = 0; else
+      this.params.offset! += 20;
+  }
   selectPriority(type: string, $event: any) {
     this.select($event);
     const index: number = this.filterObject.priority_type?.indexOf(type)!;
@@ -49,6 +60,7 @@ export class RequestContainerComponent implements OnInit {
       this.filterObject.priority_type?.splice(index, 1);
     else this.filterObject.priority_type?.push(type);
     console.log(this.filterObject.priority_type!);
+    this.search();
   }
   searchClick(data: any) {
     this.filterObject.keyword = data.value;
@@ -62,6 +74,7 @@ export class RequestContainerComponent implements OnInit {
       this.filterObject.support_types?.splice(index, 1);
     else this.filterObject.support_types?.push(type);
     console.log(this.filterObject.support_types!);
+    this.search();
   }
   selectStatus(type: string, $event: any) {
     this.select($event);
@@ -71,6 +84,7 @@ export class RequestContainerComponent implements OnInit {
       this.filterObject.status?.splice(index, 1);
     else this.filterObject.status?.push(type);
     console.log(this.filterObject.status!);
+    this.search();
   }
   selectObject(type: string, $event: any) {
     this.select($event);
@@ -80,9 +94,11 @@ export class RequestContainerComponent implements OnInit {
       this.filterObject.object_status?.splice(index, 1);
     else this.filterObject.object_status?.push(type);
     console.log(this.filterObject.object_status!);
+    this.search();
   }
   selectDistance(dis: number) {
     this.filterObject.distance = dis;
+    this.search();
   }
   setKey($event: any) {
     console.log($event.target.value);
@@ -90,19 +106,25 @@ export class RequestContainerComponent implements OnInit {
     this.search();
   }
   search() {
-    var obj = {
+    this.queryObject = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
       object_status: this.filterObject.object_status?.toString(),
       support_types: this.filterObject.support_types?.toString(),
       priority_type: this.filterObject.priority_type?.toString(),
     };
-    this.UrgentRequestService.search(obj).subscribe((result) => {
-      this.requests = result;
-      console.log(result);
-    });
+    this.paramsInit();
+    this.load();
   }
-
+  load() {
+    if (this.params.limit != 0)
+      this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
+        if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
+        else this.requests = result.sos_requests;
+        this.requestsChange.emit(this.requests);
+        this.updateParams(result.total);
+      });
+  }
   select($event: any) {
     $event.stopPropagation();
     $event.preventDefault();
@@ -147,5 +169,6 @@ export class RequestContainerComponent implements OnInit {
     let data = this.StorageService.setLocation();
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
+    this.search();
   }
 }

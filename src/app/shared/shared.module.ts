@@ -36,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
+import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 @NgModule({
   declarations: [
     CardComponent,
@@ -57,6 +58,7 @@ import { RequestContainerComponent } from './components/request-container/reques
     TransFormComponent,
     CommentComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
   ],
   imports: [
     CommonModule,
@@ -84,6 +86,7 @@ import { RequestContainerComponent } from './components/request-container/reques
     TransCardComponent,
     TransFormComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective
   ],
   providers: [
     HttpClientModule,

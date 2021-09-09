@@ -30,15 +30,18 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
       .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_supporter_id=${id}`)
       .pipe(map((res) => res.data));
   }
-  search(body: any): Observable<ISOSRequest[]> {
+  search(body: any, queryParams?: IQueryPrams): Observable<{
+    sos_requests: ISOSRequest[];
+    total: number;
+  }> {
     return this.http
       .post<{
         data: {
           sos_requests: ISOSRequest[];
           total: number;
         };
-      }>(`${this.host}/sos_requests/search`, body)
-      .pipe(map((res) => res.data.sos_requests));
+      }>(`${this.host}/sos_requests/search`, body, { params: { ...queryParams } })
+      .pipe(map((res) => res.data));
   }
 
   join(request_id: string, body: IJoinRequest): Observable<ISOSRequest> {

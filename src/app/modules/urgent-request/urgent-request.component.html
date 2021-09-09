@@ -4,7 +4,7 @@
       <mat-tab label="Tất cả">
         <ng-template matTabContent style="width:100%">
           <div fxFlex="noshrink" id="request_list">
-            <all-request-container [requests]="requests"></all-request-container>
+            <all-request-container [(requests)]='requests'></all-request-container>
           </div>
           <div fxFlex="fxFill" class="two">
             <app-maps [requests]="requests"></app-maps>
@@ -14,21 +14,21 @@
       <mat-tab label="Được đề xuất">
         <ng-template matTabContent>
           <div class="fw-container">
-            <app-request-container type='full-width' [requests]='groupSuggested'></app-request-container>
+            <suggested-request [groups]="user.groups"></suggested-request>
           </div>
         </ng-template>
       </mat-tab>
       <mat-tab label="Đã tạo">
         <ng-template matTabContent>
           <div class="fw-container">
-            <app-request-container type='full-width' [requests]='userCreatedRequests'></app-request-container>
+            <created-request [user_id]="user.id"></created-request>
           </div>
         </ng-template>
       </mat-tab>
       <mat-tab label="Công việc">
         <ng-template matTabContent>
           <div class="fw-container">
-            <app-request-container type='full-width' [requests]='joinedRequests'></app-request-container>
+            <joined-request [user_id]="user.id"></joined-request>
           </div>
         </ng-template>
       </mat-tab>

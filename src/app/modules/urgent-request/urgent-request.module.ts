@@ -22,6 +22,10 @@ import { RequestFormComponent } from './request-form/request-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { SuggestedComponent } from './suggested/suggested.component';
+import { CreatedComponent } from './created/created.component';
+import { JoinedComponent } from './joined/joined.component';
+import { BookmarkedComponent } from './bookmarked/bookmarked.component';
 const routes: Routes = [
   {
     path: '',
@@ -35,6 +39,10 @@ const routes: Routes = [
     RequestContainerComponent,
     MapsComponent,
     RequestFormComponent,
+    SuggestedComponent,
+    CreatedComponent,
+    JoinedComponent,
+    BookmarkedComponent,
   ],
   imports: [
     CommonModule,
