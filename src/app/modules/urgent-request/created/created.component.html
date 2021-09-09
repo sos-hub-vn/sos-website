@@ -1,1 +1,1 @@
-<app-request-container type='full-width' [requests]='userCreatedRequests'></app-request-container>
+<app-request-container (scrollingFinished)="load()" type='full-width' [requests]='userCreatedRequests'></app-request-container>

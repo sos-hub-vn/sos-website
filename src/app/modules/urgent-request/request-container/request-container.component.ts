@@ -20,7 +20,7 @@ export class RequestContainerComponent implements OnInit {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
-  params: IQueryPrams = {}
+  
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -44,11 +44,11 @@ export class RequestContainerComponent implements OnInit {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
   }
+  params: IQueryPrams = {}
   paramsInit() {
     this.params = { limit: 20, offset: 0 }
   }
   updateParams(returnNumber: number) {
-    console.log("returnNumber: ", returnNumber);
     if (returnNumber < 20) this.params.limit = 0; else
       this.params.offset! += 20;
   }

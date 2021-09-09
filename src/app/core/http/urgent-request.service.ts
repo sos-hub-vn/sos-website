@@ -15,19 +15,19 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
     this.host = environment.host;
   }
   //'
-  getGroupSuggested(id: string): Observable<ISOSRequest[]> {
+  getGroupSuggested(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/groups/${id}/suggest`)
+      .get<{ data: ISOSRequest[] }>(`${this.host}/groups/${id}/suggest`, { params: { ...queryParams } })
       .pipe(map((res) => res.data));
   }
-  getByRequesterId(id: string): Observable<ISOSRequest[]> {
+  getByRequesterId(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_requester_id=${id}`)
+      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_requester_id=${id}`, { params: { ...queryParams } })
       .pipe(map((res) => res.data));
   }
-  getJoinedRequests(id: string): Observable<ISOSRequest[]> {
+  getJoinedRequests(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_supporter_id=${id}`)
+      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_supporter_id=${id}`, { params: { ...queryParams } })
       .pipe(map((res) => res.data));
   }
   search(body: any, queryParams?: IQueryPrams): Observable<{

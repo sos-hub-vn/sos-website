@@ -8,16 +8,26 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CreatedComponent implements OnInit {
   userCreatedRequests: ISOSRequest[] = [];
-  @Input() user_id: string = ''
+  @Input() user_id: string = '';
   constructor(private UrgentRequestService: UrgentRequestService) { }
+  params: IQueryPrams = {}
+  paramsInit() {
+    this.params = { limit: 20, offset: 0 }
+  }
+  updateParams(returnNumber: number) {
+    if (returnNumber < 20) this.params.limit = 0; else
+      this.params.offset! += 20;
+  }
 
   ngOnInit(): void {
-    this.fetchInit();
+    this.paramsInit();
+    this.load();
   }
-  fetchInit() {
-    this.UrgentRequestService.getByRequesterId(this.user_id).subscribe((result) => {
-      this.userCreatedRequests = result;
-      console.log(result);
-    });
+  load() {
+    if (this.params.limit != 0)
+      this.UrgentRequestService.getByRequesterId(this.user_id, this.params).subscribe((result) => {
+        this.userCreatedRequests = [...this.userCreatedRequests, ...result];
+        this.updateParams(result.length);
+      });
   }
 }
