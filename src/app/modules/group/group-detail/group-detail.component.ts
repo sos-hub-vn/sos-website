@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { DeleteGroupComponent } from './delete-group/delete-group.component';
+import { SearchMemberComponent } from './search-member/search-member.component';
 import { UpdateAddressComponent } from './update-address/update-address.component';
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
@@ -31,10 +33,19 @@ export class GroupDetailComponent implements OnInit {
     });
   }
 
-  openUpdateAddress(province: any, provinceId: any,wardName: any, wardCode: any,districtName: any, districtCode: any, address:any, id: any) {
+  openUpdateAddress(
+    province: any,
+    provinceId: any,
+    wardName: any,
+    wardCode: any,
+    districtName: any,
+    districtCode: any,
+    address: any,
+    id: any
+  ) {
     this.dialog.open(UpdateAddressComponent, {
       panelClass: 'addressType',
-      data: { 
+      data: {
         province: province,
         provinceId: provinceId,
         wardName: wardName,
@@ -42,7 +53,7 @@ export class GroupDetailComponent implements OnInit {
         districtName: districtName,
         districtCode: districtCode,
         address: address,
-        id: id 
+        id: id,
       },
     });
   }
@@ -54,15 +65,40 @@ export class GroupDetailComponent implements OnInit {
     });
   }
 
-  openDeleteGroup(id: any){
+  openDeleteGroup(id: any) {
     this.dialog.open(DeleteGroupComponent, {
       panelClass: 'deleteType',
       data: { id: id },
     });
   }
+
+  openAddMember(members: any, id: any) {
+    this.dialog.open(SearchMemberComponent, {
+      panelClass: 'addMember',
+      data: {
+        members: members,
+        id: id,
+      },
+    });
+  }
+
+  removeMember(groupId: any, memberId: any) {
+    let data = {
+      members: [
+        {
+          id: memberId,
+        },
+      ],
+    };
+    this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
+      this.group.members = data.data.members;
+    })
+  }
+
   constructor(
     public dialogRef: MatDialogRef<GroupDetailComponent>,
     public dialog: MatDialog,
+    private GroupService: VolunteerGroupService,
     @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup
   ) {}
 

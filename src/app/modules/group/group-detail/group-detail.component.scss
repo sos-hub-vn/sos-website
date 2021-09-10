@@ -62,15 +62,24 @@
           outline: none;
         }
       }
-      ::ng-deep app-member{
-        .member_item{
-          padding: 10px 0;
-          border-bottom: 1px solid #E2E2E2;
+      .member{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #E2E2E2;
+        a{
+          color: #000000;
+          font-size: 14px;
+          text-decoration: underline;
+          font-weight: 700;
+          text-transform: uppercase;
+          cursor: pointer;
+          outline: none;
+          padding-bottom: 0;
         }
         &:last-child{
-          .member_item{
-            border-bottom: unset;
-          }
+          border-bottom: unset;
         }
       }
     }

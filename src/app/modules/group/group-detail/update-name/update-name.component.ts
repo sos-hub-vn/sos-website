@@ -31,11 +31,8 @@ export class UpdateNameComponent implements OnInit,AfterViewInit {
   }
 
   async onSubmit(data: string) {
-    console.log(data);
     this.GroupService.update(this.group.id, data, {}).subscribe();
   }
 
-  ngOnInit(): void {
-    this.dataFetch = this.group;
-  }
+  ngOnInit(): void {}
 }

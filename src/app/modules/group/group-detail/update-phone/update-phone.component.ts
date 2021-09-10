@@ -31,7 +31,6 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   async onSubmit(data: string) {
-    console.log(data);
     this.GroupService.update(this.group.id, data, {}).subscribe();
   }
 

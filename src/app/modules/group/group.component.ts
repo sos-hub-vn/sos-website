@@ -36,7 +36,6 @@ export class GroupComponent implements OnInit {
         }
       }
       this.groups = result;
-      console.log(this.groups);
       this.searchData = this.groups;
     });
     this.SupportTypesService.findAll().subscribe((result) => {
@@ -50,7 +49,6 @@ export class GroupComponent implements OnInit {
   }
 
   filter(data: any){
-    console.log(data.value);
     if(data.value.length === 0){
       this.searchData = this.groups;
       return;
