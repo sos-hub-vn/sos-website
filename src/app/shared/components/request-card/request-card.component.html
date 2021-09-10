@@ -11,7 +11,7 @@
 
   <mat-chip-list aria-label="tag">
     <mat-chip color="primary" selected>
-      <mat-icon>error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
+      <mat-icon style="margin-right: 5px;">error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
     </mat-chip>
     <div *ngIf="type == 'half-width'">
       <div class="chip" *ngIf="request?.support_types![0]">{{ request?.support_types![0]?.name }}
