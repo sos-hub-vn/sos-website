@@ -1,4 +1,7 @@
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
+import { UrgentRequestComponent } from './../urgent-request.component';
+
+
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

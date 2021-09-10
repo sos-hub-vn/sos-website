@@ -37,6 +37,7 @@ import { TransFormComponent } from './components/trans-form/trans-form.component
 import { CommentComponent } from './components/comment/comment.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
 import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
+import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -59,6 +60,7 @@ import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
     CommentComponent,
     RequestContainerComponent,
     ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   imports: [
     CommonModule,
@@ -86,7 +88,8 @@ import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
     TransCardComponent,
     TransFormComponent,
     RequestContainerComponent,
-    ScrollTrackerDirective
+    ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   providers: [
     HttpClientModule,
@@ -95,4 +98,4 @@ import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
     httpInterceptorProviders,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
