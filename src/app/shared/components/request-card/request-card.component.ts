@@ -1,3 +1,4 @@
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from './../../../core/services/storage.service';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -11,9 +12,9 @@ export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
   @Input() type?: String;
   user: any;
-  mapPriority = new Map();
-  mapStatus = new Map();
-  constructor(private UrgentRequestService: UrgentRequestService, private StorageService: StorageService) {
+  mapPriority: any;
+  mapStatus: any;
+  constructor(private UrgentRequestService: UrgentRequestService, private StorageService: StorageService, private ConstantsService: ConstantsService) {
   }
   mark($event: any, action?: string) {
     console.log(action);
@@ -26,12 +27,8 @@ export class RequestCardComponent implements OnInit {
       })
   }
   ngOnInit(): void {
-    this.mapPriority.set('high', 'Rất nguy cấp');
-    this.mapPriority.set('normal', 'Nguy cấp');
-    this.mapPriority.set('', 'Nguy cấp');
-    this.mapStatus.set('', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('waiting', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('supporting', 'Đang được hỗ trợ');
+    this.mapPriority = this.ConstantsService.MAP_PRIORITY;
+    this.mapStatus = this.ConstantsService.MAP_STATUS
     this.user = this.StorageService.userInfo;
   }
 }

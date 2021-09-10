@@ -14,38 +14,33 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
     super(http, 'sos_requests');
     this.host = environment.host;
   }
-  //'/sos_requests/request01d60964b3ea6201453de8fb7d2e5413/bookmark
-  markRequest(request_id?: string, body?: any): Observable<{ data: any }> {
+  markRequest(request_id?: string, body?: any): Observable<ISOSRequest> {
     return this.http
       .post<{
-        data: any
+        data: ISOSRequest
       }>(`${this.host}/sos_requests/${request_id}/bookmark`, body)
       .pipe(map((res) => res.data));
   }
-  getUserBookmarks(queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+  getByParams(path: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/users/bookmark`, { params: { ...queryParams } })
+      .get<{ data: ISOSRequest[] }>(`${this.host}/${path}`, { params: { ...queryParams } })
       .pipe(map((res) => res.data));
+  }
+
+  getUserBookmarks(queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+    return this.getByParams('users/bookmark', queryParams);
   }
   getUserSuggested(queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
-    return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/users/suggest`, { params: { ...queryParams } })
-      .pipe(map((res) => res.data));
+    return this.getByParams('users/suggest', queryParams);
   }
   getGroupSuggested(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
-    return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/groups/${id}/suggest`, { params: { ...queryParams } })
-      .pipe(map((res) => res.data));
+    return this.getByParams(`groups/${id}/suggest`, queryParams);
   }
   getByRequesterId(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
-    return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_requester_id=${id}`, { params: { ...queryParams } })
-      .pipe(map((res) => res.data));
+    return this.getByParams(`sos_requests?filter_requester_id=${id}`, queryParams);
   }
   getJoinedRequests(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
-    return this.http
-      .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_supporter_id=${id}`, { params: { ...queryParams } })
-      .pipe(map((res) => res.data));
+    return this.getByParams(`sos_requests?filter_supporter_id=${id}`, queryParams)
   }
   search(body: any, queryParams?: IQueryPrams): Observable<{
     sos_requests: ISOSRequest[];
