@@ -144,27 +144,7 @@ export class RequestContainerComponent implements OnInit {
       console.log(result);
     });
   }
-  color = {
-    accent: 'accent',
-    primary: 'primary',
-    warn: 'warn',
-    basic: 'basic',
-  };
-  icon = {
-    home: 'home',
-    menu: 'menu',
-    favorite: 'favorite',
-    sort: 'sort',
-    filter: 'filter',
-  };
-  height = {
-    small: '40',
-    large: '50',
-  };
-  text = {
-    createRequest: 'Tạo Yêu Cầu',
-    filter: 'Bộ lọc',
-  };
+ 
   openCreateForm(): void {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',

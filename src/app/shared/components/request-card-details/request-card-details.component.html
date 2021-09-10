@@ -15,7 +15,7 @@
     <div class="p-1">
       <mat-chip-list aria-label="tag">
         <mat-chip color="primary" selected>
-          <mat-icon>error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
+          <mat-icon style="margin-right: 5px;">error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
         </mat-chip>
         <div class="chip" *ngFor="let type of request?.support_types!" color="accent" selected>{{ type.name }}
         </div>
