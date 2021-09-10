@@ -15,13 +15,14 @@ export class RequestCardComponent implements OnInit {
   mapStatus = new Map();
   constructor(private UrgentRequestService: UrgentRequestService, private StorageService: StorageService) {
   }
-  mark($event: any) {
+  mark($event: any, action?: string) {
+    console.log(action);
     $event.stopPropagation();
     $event.preventDefault();
     this.UrgentRequestService.markRequest(this.request?.id,
-      { bookmarker_type: 'user', action: 'bookmark', bookmarker_id: this.user.id })
+      { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
       .subscribe((res) => {
-        console.log(res);
+        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
       })
   }
   ngOnInit(): void {

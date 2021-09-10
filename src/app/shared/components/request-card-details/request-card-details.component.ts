@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
 import { SupportObjectService } from '../../../core/http/support-object.service';
 import { TransFormComponent } from './../trans-form/trans-form.component';
@@ -31,6 +32,7 @@ export class RequestCardDetailsComponent implements OnInit {
   mapPriority = new Map();
   mapStatus = new Map();
   news: INew[] = [];
+  user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
@@ -42,13 +44,25 @@ export class RequestCardDetailsComponent implements OnInit {
   onClose() {
     this.dialogRef.close();
   }
+  mark($event: any, action?: string) {
+    console.log(action);
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.UrgentRequestService.markRequest(this.request?.id,
+      { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
+      .subscribe((res) => {
+        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
+      })
+  }
   constructor(
     public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
-    private SupportObjectService: SupportObjectService
+    private SupportObjectService: SupportObjectService,
+    private UrgentRequestService: UrgentRequestService,
+    private StorageService: StorageService
   ) {
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
@@ -124,6 +138,7 @@ export class RequestCardDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
+    this.user = this.StorageService.userInfo;
   }
 }
 @Component({
