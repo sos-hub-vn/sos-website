@@ -14,7 +14,24 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
     super(http, 'sos_requests');
     this.host = environment.host;
   }
-  //'
+  //'/sos_requests/request01d60964b3ea6201453de8fb7d2e5413/bookmark
+  markRequest(request_id?: string, body?: any): Observable<{ data: any }> {
+    return this.http
+      .post<{
+        data: any
+      }>(`${this.host}/sos_requests/${request_id}/bookmark`, body)
+      .pipe(map((res) => res.data));
+  }
+  getUserBookmarks(queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+    return this.http
+      .get<{ data: ISOSRequest[] }>(`${this.host}/users/bookmark`, { params: { ...queryParams } })
+      .pipe(map((res) => res.data));
+  }
+  getUserSuggested(queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+    return this.http
+      .get<{ data: ISOSRequest[] }>(`${this.host}/users/suggest`, { params: { ...queryParams } })
+      .pipe(map((res) => res.data));
+  }
   getGroupSuggested(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.http
       .get<{ data: ISOSRequest[] }>(`${this.host}/groups/${id}/suggest`, { params: { ...queryParams } })

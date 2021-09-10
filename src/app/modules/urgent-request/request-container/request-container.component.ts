@@ -6,6 +6,8 @@ import { SupportTypesService } from '../../../core/http/support-types.service';
 import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { RequestFormComponent } from '../request-form/request-form.component';
 
 @Component({
   selector: 'all-request-container',
@@ -20,7 +22,7 @@ export class RequestContainerComponent implements OnInit {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
-  
+
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -32,7 +34,7 @@ export class RequestContainerComponent implements OnInit {
     support_types: [],
   };
   queryObject: any = {};
-  constructor(
+  constructor( public dialog: MatDialog,
     private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
@@ -163,7 +165,17 @@ export class RequestContainerComponent implements OnInit {
     createRequest: 'Tạo Yêu Cầu',
     filter: 'Bộ lọc',
   };
+  openCreateForm(): void {
+    const dialogRef = this.dialog.open(RequestFormComponent, {
+      width: 'auto',
+      data: {},
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
   ngOnInit(): void {
     console.log(this.requests);
     let data = this.StorageService.setLocation();

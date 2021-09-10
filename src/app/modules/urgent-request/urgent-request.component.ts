@@ -19,24 +19,12 @@ import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 })
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
-
-
   user: any;
   constructor(
-    public dialog: MatDialog,
+
     private StorageService: StorageService
   ) { }
-  openCreateForm(): void {
-    const dialogRef = this.dialog.open(RequestFormComponent, {
-      width: 'auto',
-      data: {},
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
-  }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
 
