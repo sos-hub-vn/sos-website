@@ -61,7 +61,9 @@ export class GroupComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(CreateGroupComponent);
+    this.dialog.open(CreateGroupComponent,{
+      panelClass: 'diaglog-createGroup'
+    });
   }
 
   openDialogGroup(group: IVolunteerGroup): void {
