@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-update-phone',
@@ -13,7 +14,8 @@ export class UpdatePhoneComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<UpdatePhoneComponent>,
-    private GroupService: VolunteerGroupService
+    private GroupService: VolunteerGroupService,
+    private notification: NotificationService
   ) {}
 
   ngAfterViewInit(): void {
@@ -31,7 +33,15 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   async onSubmit(data: string) {
-    this.GroupService.update(this.group.id, data, {}).subscribe();
+    this.GroupService.update(this.group.id, data, {}).subscribe((data: any)=>{
+      if(data){
+        this.notification.success("Sửa thông tin thành công");
+        this.CloseDialog();
+        return;
+      }
+      this.CloseDialog();
+      this.notification.error("Sửa thông tin thất bại");
+    });
   }
 
   ngOnInit(): void {}

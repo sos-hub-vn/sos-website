@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { DeleteGroupComponent } from './delete-group/delete-group.component';
 import { SearchMemberComponent } from './search-member/search-member.component';
 import { UpdateAddressComponent } from './update-address/update-address.component';
@@ -15,6 +16,17 @@ import { UpdateSupportComponent } from './update-support/update-support.componen
   styleUrls: ['./group-detail.component.scss'],
 })
 export class GroupDetailComponent implements OnInit {
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup,
+    public dialogRef: MatDialogRef<GroupDetailComponent>,
+    public dialog: MatDialog,
+    private GroupService: VolunteerGroupService,
+    private notification: NotificationService
+  ) {}
+
+  ngOnInit(): void {}
+
   onClose() {
     this.dialogRef.close();
   }
@@ -91,16 +103,11 @@ export class GroupDetailComponent implements OnInit {
       ],
     };
     this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
-      this.group.members = data.data.members;
+      if(data){
+        this.notification.success("Xoá thành công");
+        return;
+      }
+      this.notification.error("Xoá thất bại");
     })
   }
-
-  constructor(
-    public dialogRef: MatDialogRef<GroupDetailComponent>,
-    public dialog: MatDialog,
-    private GroupService: VolunteerGroupService,
-    @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup
-  ) {}
-
-  ngOnInit(): void {}
 }

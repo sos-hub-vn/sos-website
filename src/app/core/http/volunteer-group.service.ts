@@ -40,6 +40,10 @@ export class VolunteerGroupService extends RestService<IVolunteerGroup> {
     );
   }
 
+  delete(id: string){
+    return this.http.delete(`${this.host}/groups/${id}`);
+  }
+
 
 
   groups: IVolunteerGroup[] = [

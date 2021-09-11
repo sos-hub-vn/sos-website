@@ -7,6 +7,7 @@ import {
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { ProvinceService } from 'src/app/core/http/province.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-create-group',
@@ -26,7 +27,8 @@ export class CreateGroupComponent implements OnInit {
     private _dialogRef: MatDialogRef<CreateGroupComponent>,
     private ProvinceService: ProvinceService,
     private SupportTypesService: SupportTypesService,
-    private GroupService: VolunteerGroupService
+    private GroupService: VolunteerGroupService,
+    private notification: NotificationService,
   ) {
     this.fetchInit();
   }
@@ -59,7 +61,18 @@ export class CreateGroupComponent implements OnInit {
 
   async onSubmit(data: IVolunteerGroup) {
     data.type = 'nhom_thien_nguyen';
-    this.GroupService.create(data, {}).subscribe();
+    this.GroupService.create(data, {}).subscribe((data: any) =>{
+      if(data){
+        this.notification.success("Tạo nhóm thành công");
+        this.CloseDialog();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        return;
+      }
+      this.CloseDialog();
+      this.notification.error("Xoá nhóm thất bại");
+    });
   }
 
   checkSubmit(data: any) {
