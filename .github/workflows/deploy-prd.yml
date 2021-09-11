@@ -16,7 +16,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ deploy_version }}
+          ref: ${{ github.event.inputs.deploy_version  }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,4 +39,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/sos-hub-vn/sos-website:latest
-            ghcr.io/sos-hub-vn/sos-website:${{ deploy_version }}
+            ghcr.io/sos-hub-vn/sos-website:${{ github.event.inputs.deploy_version }}
