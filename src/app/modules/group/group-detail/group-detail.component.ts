@@ -17,6 +17,8 @@ import { UpdateSupportComponent } from './update-support/update-support.componen
 })
 export class GroupDetailComponent implements OnInit {
 
+  currentInput:any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup,
     public dialogRef: MatDialogRef<GroupDetailComponent>,
@@ -109,5 +111,10 @@ export class GroupDetailComponent implements OnInit {
       }
       this.notification.error("Xoá thất bại");
     })
+  }
+
+  onFileSelected(event:any) {
+    console.log(event.target.files);
+    this.currentInput = event.target.files; 
   }
 }

@@ -50,10 +50,8 @@ export class UpdateSupportComponent implements OnInit {
     this.GroupService.update(this.group.id, data, {}).subscribe((data: any) => {
       if(data){
         this.notification.success("Sửa thông tin thành công");
-        this.CloseDialog();
         return;
       }
-      this.CloseDialog();
       this.notification.error("Sửa thông tin thất bại");
     });
   }
