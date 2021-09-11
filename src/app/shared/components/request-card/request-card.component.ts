@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../core/services/general.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from './../../../core/services/storage.service';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
@@ -11,10 +12,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
   @Input() type?: String;
+  createTime: string = ''
   user: any;
   mapPriority: any;
   mapStatus: any;
-  constructor(private UrgentRequestService: UrgentRequestService, private StorageService: StorageService, private ConstantsService: ConstantsService) {
+  distance: string = ''
+  constructor(private GeneralService: GeneralService, private UrgentRequestService: UrgentRequestService, private StorageService: StorageService, private ConstantsService: ConstantsService) {
   }
   mark($event: any, action?: string) {
     console.log(action);
@@ -26,9 +29,14 @@ export class RequestCardComponent implements OnInit {
         if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
       })
   }
+
   ngOnInit(): void {
     this.mapPriority = this.ConstantsService.MAP_PRIORITY;
     this.mapStatus = this.ConstantsService.MAP_STATUS
     this.user = this.StorageService.userInfo;
+    this.createTime = this.GeneralService.diffDate(new Date(this.request?.created_time!))
+    const RLocation = this.request?.location?.split(',')
+    const CLocation = this.StorageService.getLocation();
+    this.distance = this.GeneralService.getDistanceFromLatLonInKm(parseFloat(RLocation![0]), parseFloat(RLocation![1]), CLocation.lat, CLocation.lng);
   }
 }

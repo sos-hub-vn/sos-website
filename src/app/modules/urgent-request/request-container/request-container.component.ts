@@ -102,6 +102,9 @@ export class RequestContainerComponent implements OnInit {
     this.filterObject.distance = dis;
     this.search();
   }
+  clearKey(){
+    this.filterObject.keyword=""
+  }
   setKey($event: any) {
     console.log($event.target.value);
     this.filterObject.keyword = $event.target.value;

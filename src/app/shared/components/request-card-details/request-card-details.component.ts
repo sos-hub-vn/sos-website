@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../core/services/general.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
@@ -32,6 +33,7 @@ export class RequestCardDetailsComponent implements OnInit {
   mapPriority: any
   mapStatus: any
   news: INew[] = [];
+  create_time:string='';
   user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
@@ -63,7 +65,8 @@ export class RequestCardDetailsComponent implements OnInit {
     private SupportObjectService: SupportObjectService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
-    private ConstantsService: ConstantsService
+    private ConstantsService: ConstantsService,
+    private GeneralService: GeneralService
   ) {
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
@@ -126,6 +129,7 @@ export class RequestCardDetailsComponent implements OnInit {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
     this.user = this.StorageService.userInfo;
+    this.create_time=this.GeneralService.diffDate(new Date(this.request?.created_time!))
   }
 }
 @Component({

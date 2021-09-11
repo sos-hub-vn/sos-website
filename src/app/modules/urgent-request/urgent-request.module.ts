@@ -1,3 +1,4 @@
+import { MatBadgeModule } from '@angular/material/badge';
 import { BookmarkedComponent } from './bookmarked/bookmarked.component';
 import { JoinedComponent } from './joined/joined.component';
 import { CreatedComponent } from './created/created.component';
@@ -59,7 +60,8 @@ const routes: Routes = [
     MatOptionModule,
     MatSelectModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatBadgeModule
   ],
 })
 export class UrgentRequestModule { }

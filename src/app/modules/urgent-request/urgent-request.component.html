@@ -3,11 +3,13 @@
     <mat-tab-group fxFill>
       <mat-tab label="Tất cả">
         <ng-template matTabContent style="width:100%">
-          <div fxFlex="noshrink" id="request_list">
-            <all-request-container [(requests)]='requests'></all-request-container>
-          </div>
-          <div fxFlex="fxFill" class="two">
-            <app-maps [requests]="requests"></app-maps>
+          <div fxLayout="row">
+            <div fxFlex.lt-sm="100" fxFlex.lt-md="45"  fxFlex.gt-xs="noshrink" id="request_list">
+              <all-request-container [(requests)]='requests'></all-request-container>
+            </div>
+            <div fxHide.lt-sm fxFlex.gt-xs="fxFill" class="two">
+              <app-maps [requests]="requests"></app-maps>
+            </div>
           </div>
         </ng-template>
       </mat-tab>
@@ -40,7 +42,6 @@
         </ng-template>
       </mat-tab>
     </mat-tab-group>
-
   </div>
- 
+
 </div>
