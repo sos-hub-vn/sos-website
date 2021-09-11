@@ -9,6 +9,7 @@ import { UpdateAddressComponent } from './update-address/update-address.componen
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
 import { UpdateSupportComponent } from './update-support/update-support.component';
+import { S3Service } from "../../../core/services/s3.service";
 
 @Component({
   selector: 'app-group-detail',
@@ -18,13 +19,13 @@ import { UpdateSupportComponent } from './update-support/update-support.componen
 export class GroupDetailComponent implements OnInit {
 
   currentInput:any;
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup,
     public dialogRef: MatDialogRef<GroupDetailComponent>,
     public dialog: MatDialog,
     private GroupService: VolunteerGroupService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private s3Service: S3Service
   ) {}
 
   ngOnInit(): void {}
@@ -36,14 +37,24 @@ export class GroupDetailComponent implements OnInit {
   openUpdateName(cur_name: any, id: any) {
     this.dialog.open(UpdateNameComponent, {
       panelClass: 'nameType',
+      disableClose: true,
       data: { cur_name: cur_name, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.name = result.data.name;
+      }
     });
   }
 
   openUpdatePhone(cur_phone: any, id: any) {
     this.dialog.open(UpdatePhoneComponent, {
       panelClass: 'phoneType',
+      disableClose: true,
       data: { cur_phone: cur_phone, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.contact_info = result.data.contact_info;
+      }
     });
   }
 
@@ -59,6 +70,7 @@ export class GroupDetailComponent implements OnInit {
   ) {
     this.dialog.open(UpdateAddressComponent, {
       panelClass: 'addressType',
+      disableClose: true,
       data: {
         province: province,
         provinceId: provinceId,
@@ -69,44 +81,65 @@ export class GroupDetailComponent implements OnInit {
         address: address,
         id: id,
       },
-    });
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.address_info = result.data.address_info;
+      }
+    })
   }
 
   openUpdateSupport(cur_support: any, id: any) {
     this.dialog.open(UpdateSupportComponent, {
       panelClass: 'supportType',
+      disableClose: true,
       data: { cur_support: cur_support, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.detail_info = result.data.detail_info;
+      }
     });
   }
 
   openDeleteGroup(id: any) {
     this.dialog.open(DeleteGroupComponent, {
       panelClass: 'deleteType',
+      disableClose: true,
       data: { id: id },
-    });
+    }).afterClosed().subscribe((result:any) => {
+      if(result){
+        this.dialogRef.close({data: result.data});
+      }
+    })
   }
 
   openAddMember(members: any, id: any) {
     this.dialog.open(SearchMemberComponent, {
       panelClass: 'addMember',
+      disableClose: true,
       data: {
         members: members,
         id: id,
       },
-    });
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.members = result.data.members;
+      }
+    })
   }
 
   removeMember(groupId: any, memberId: any) {
     let data = {
-      members: [
+      "members": [
         {
-          id: memberId,
+          "id": memberId,
         },
       ],
     };
     this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
       if(data){
+        console.log(data);
         this.notification.success("Xoá thành công");
+        this.group.members = data.data.members;
         return;
       }
       this.notification.error("Xoá thất bại");
@@ -114,7 +147,11 @@ export class GroupDetailComponent implements OnInit {
   }
 
   onFileSelected(event:any) {
-    console.log(event.target.files);
-    this.currentInput = event.target.files; 
+    let file = event.target.files[0];
+    this.s3Service.uploadImage(file).subscribe(res => {
+      if(res){
+        console.log(res);
+      }
+    })
   }
 }

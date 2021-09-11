@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from 'src/app/core/http/users.service';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-search-member',
@@ -13,18 +14,16 @@ export class SearchMemberComponent implements OnInit {
   searchData: any = {};
   isData: boolean | unknown;
   isSame: boolean  = false;
+  dataFetch: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<SearchMemberComponent>,
     private GroupService: VolunteerGroupService,
-    private userService: UsersService
+    private userService: UsersService,
+    private notification: NotificationService
   ) { }
 
   ngOnInit(): void {
-  }
-
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
   }
 
   async onSubmit(data:any) {
@@ -38,13 +37,17 @@ export class SearchMemberComponent implements OnInit {
    };   
     this.GroupService.addMemberGroup(this.group.id, dataFetch).subscribe((data: any)=>{
       if(data){
+        this.notification.success("Thêm thành viên thành công");
         this.isSame = data.members.some((el:any)=> el.phone_number === this.keysearch);
+        this.dataFetch = data;
+        return;
       }
+      this.notification.error("Thêm thành viên thất bại");
     });
   }
 
   CloseDialog() {
-    this._dialogRef.close();
+    this._dialogRef.close({data: this.dataFetch});
   }
 
   onSearchChange(searchValue: string):void {

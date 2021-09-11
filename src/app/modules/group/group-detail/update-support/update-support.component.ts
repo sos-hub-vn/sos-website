@@ -36,10 +36,6 @@ export class UpdateSupportComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
-  }
-
   compareObjects(o1: any, o2: any) {
     if(o1.type == o2.type )
     return true;
@@ -50,6 +46,7 @@ export class UpdateSupportComponent implements OnInit {
     this.GroupService.update(this.group.id, data, {}).subscribe((data: any) => {
       if(data){
         this.notification.success("Sửa thông tin thành công");
+        this._dialogRef.close({data: data});
         return;
       }
       this.notification.error("Sửa thông tin thất bại");

@@ -62,15 +62,25 @@ export class GroupComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(CreateGroupComponent,{
-      panelClass: 'diaglog-createGroup'
-    });
+      panelClass: 'diaglog-createGroup',
+      disableClose: true,
+    }).afterClosed().subscribe((result: any) => {
+      if(result){
+        this.fetchInit();
+      }
+    })
   }
 
   openDialogGroup(group: IVolunteerGroup): void {
     const dialogRef = this.dialog.open(GroupDetailComponent, {
       panelClass: 'dialog-volunteer',
+      disableClose: true,
       data: group
-    });
+    }).afterClosed().subscribe((result: any) => {
+      if(result){
+        this.searchData = this.groups.filter((item: any) => item.id !== result.data.data.id);
+      }
+    })
   }
 
   ngOnInit(): void {}

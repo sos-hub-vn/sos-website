@@ -33,7 +33,7 @@ export class VolunteerGroupService extends RestService<IVolunteerGroup> {
   }
 
   removeMemberGroup(groupId: any, body: any){
-    return this.http.delete(`${this.host}/groups/${groupId}/members`, body).pipe(
+    return this.http.delete<{ data: any}>(`${this.host}/groups/${groupId}/members`, {body: body}).pipe(
       map((res) => {
         return res;
       })

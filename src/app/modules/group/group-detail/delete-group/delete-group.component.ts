@@ -30,13 +30,9 @@ export class DeleteGroupComponent implements OnInit {
     this.GroupService.delete(this.group.id).subscribe((data: any) => {
       if(data){
         this.notification.success("Xoá nhóm thành công");
-        this.CloseDialog();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        this._dialogRef.close({data: data});
         return;
       }
-      this.CloseDialog();
       this.notification.error("Xoá nhóm thất bại");
     });
   }

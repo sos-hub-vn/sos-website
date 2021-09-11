@@ -28,18 +28,13 @@ export class UpdatePhoneComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
-  }
-
   async onSubmit(data: string) {
     this.GroupService.update(this.group.id, data, {}).subscribe((data: any)=>{
       if(data){
         this.notification.success("Sửa thông tin thành công");
-        this.CloseDialog();
+        this._dialogRef.close({data: data});
         return;
       }
-      this.CloseDialog();
       this.notification.error("Sửa thông tin thất bại");
     });
   }

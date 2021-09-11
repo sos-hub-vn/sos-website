@@ -64,19 +64,12 @@ export class CreateGroupComponent implements OnInit {
     this.GroupService.create(data, {}).subscribe((data: any) =>{
       if(data){
         this.notification.success("Tạo nhóm thành công");
-        this.CloseDialog();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        this._dialogRef.close({data: data});
         return;
       }
       this.CloseDialog();
       this.notification.error("Xoá nhóm thất bại");
     });
-  }
-
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
   }
 
   ngOnInit(): void {}
