@@ -13,7 +13,7 @@
     border-right: 1px solid rgb(226, 226, 226);
   }
   .request_sesstion{
-    width: 500px;
+    width: 100%;
     h3{
       font-size: 20px;
       font-weight: 700;
@@ -26,7 +26,6 @@
       }
       p{
         font-size: 16px;
-        max-width: 320px;
         font-weight: 700;
         color: #000000;
         margin-bottom: 0;
@@ -102,8 +101,12 @@
 }
 
 ::ng-deep .dialog-volunteer{
+  width: 600px;
+  max-height: 80vh;
+  overflow-y: scroll;
   .mat-dialog-container{
     box-shadow: unset;
+    border-radius: 10px;
   }
 }
 
