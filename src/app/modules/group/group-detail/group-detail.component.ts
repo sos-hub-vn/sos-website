@@ -41,7 +41,7 @@ export class GroupDetailComponent implements OnInit {
       data: { cur_name: cur_name, id: id },
     }).afterClosed().subscribe((result: any)=>{
       if(result){
-        this.group.name = result.data.name;
+        this.group = result.data;
       }
     });
   }
@@ -53,7 +53,7 @@ export class GroupDetailComponent implements OnInit {
       data: { cur_phone: cur_phone, id: id },
     }).afterClosed().subscribe((result: any)=>{
       if(result){
-        this.group.contact_info = result.data.contact_info;
+        this.group = result.data;
       }
     });
   }
@@ -83,7 +83,7 @@ export class GroupDetailComponent implements OnInit {
       },
     }).afterClosed().subscribe((result: any)=>{
       if(result){
-        this.group.address_info = result.data.address_info;
+        this.group = result.data;
       }
     })
   }
@@ -95,7 +95,7 @@ export class GroupDetailComponent implements OnInit {
       data: { cur_support: cur_support, id: id },
     }).afterClosed().subscribe((result: any)=>{
       if(result){
-        this.group.detail_info = result.data.detail_info;
+        this.group = result.data;
       }
     });
   }
@@ -121,8 +121,8 @@ export class GroupDetailComponent implements OnInit {
         id: id,
       },
     }).afterClosed().subscribe((result: any)=>{
-      if(result.data.members){
-        this.group.members = result.data.members;
+      if(result){
+        this.group = result.data;
       }
     })
   }
