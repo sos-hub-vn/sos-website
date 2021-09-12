@@ -14,7 +14,7 @@ export class SearchMemberComponent implements OnInit {
   searchData: any = {};
   isData: boolean | unknown;
   isSame: boolean  = false;
-  dataFetch: any;
+  dataFetch: any = {};
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<SearchMemberComponent>,
@@ -47,7 +47,11 @@ export class SearchMemberComponent implements OnInit {
   }
 
   CloseDialog() {
-    this._dialogRef.close({data: this.dataFetch});
+    if(this.dataFetch){
+      this._dialogRef.close({data: this.dataFetch});
+      return;
+    }
+    this._dialogRef.close();
   }
 
   onSearchChange(searchValue: string):void {
