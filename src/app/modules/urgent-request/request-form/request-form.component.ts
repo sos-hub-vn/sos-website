@@ -85,7 +85,8 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = 'guest';
     data.medias = this.medias;
     const user = this.StorageService.userInfo;
-    if (user !== null && user?.role !== 'GUEST') {
+    console.log(user, user!== null)
+    if (user!== null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
