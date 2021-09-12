@@ -47,4 +47,14 @@ export class UsersService extends RestService<IUser> {
         return res.data
       }));
   }
+
+  searchProfile(data: any){
+    return this.http
+      .post<{ data: any }>(`${this.host}/users/search`, data)
+      .pipe(
+        map((res) => {
+          return res.data;
+        })
+      );
+  }
 }
