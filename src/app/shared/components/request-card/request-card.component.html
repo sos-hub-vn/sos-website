@@ -22,6 +22,15 @@
         {{ (request?.requester_object_status)![0]?.name! }}</mat-chip
       >
     </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <!-- <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
+      <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
+    </div> -->
+    <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
+=======
+>>>>>>> master
     <div *ngIf="type == 'full-width'">
       <mat-chip
         *ngFor="let type of request?.support_types!"
@@ -34,6 +43,10 @@
       >
     </div>
     <mat-chip>{{ request?.status }} </mat-chip>
+<<<<<<< HEAD
+=======
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
+>>>>>>> master
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>

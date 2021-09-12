@@ -35,6 +35,13 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 export class RequestCardDetailsComponent implements OnInit {
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string; }[] | undefined;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  mapPriority = new Map();
+  mapStatus = new Map();
+=======
+>>>>>>> master
 
   new_status: String = '';
   cur_status?: String = this.request.status;
@@ -43,12 +50,24 @@ export class RequestCardDetailsComponent implements OnInit {
 
   mapPriority: any
   mapStatus: any
+<<<<<<< HEAD
+=======
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
+>>>>>>> master
   news: INew[] = [];
   user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
+<<<<<<< HEAD
     subject: 'new_comment',
+=======
+<<<<<<< HEAD
+    subject: '',
+=======
+    subject: 'new_comment',
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
+>>>>>>> master
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
@@ -128,6 +147,11 @@ export class RequestCardDetailsComponent implements OnInit {
       data: { request_id: this.request.id, status: this.request.status },
     });
   }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master
   setStatus(status: string): void {
     this.new_status = status;
   }
@@ -138,6 +162,10 @@ export class RequestCardDetailsComponent implements OnInit {
     this.cur_status = this.new_status;
     this.isOpen = false;
   }
+<<<<<<< HEAD
+=======
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
+>>>>>>> master
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
       data: {
