@@ -43,16 +43,6 @@ export class RequestCardDetailsComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string; }[] | undefined;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  mapPriority = new Map();
-  mapStatus = new Map();
-=======
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
 
   new_status: String = '';
   cur_status?: String = this.request.status;
@@ -60,34 +50,14 @@ export class RequestCardDetailsComponent implements OnInit {
   status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>; 
   mapSupportStatus!: Map<string, IBaseStatus>;
-  mapPriority: any
-<<<<<<< HEAD
-=======
-  mapStatus: any
-<<<<<<< HEAD
-=======
->>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
+  mapPriority: any;
   news: INew[] = [];
   user: any;
   create_time:string='';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-<<<<<<< HEAD
     subject: 'new_comment',
-=======
-<<<<<<< HEAD
-    subject: 'new_comment',
-=======
-<<<<<<< HEAD
-    subject: '',
-=======
-    subject: 'new_comment',
->>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
@@ -206,14 +176,6 @@ export class RequestCardDetailsComponent implements OnInit {
       data: { request_id: this.request.id, status: this.request.status },
     });
   }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
   setStatus(status: string): void {
     this.new_status = status;
   }
@@ -222,13 +184,6 @@ export class RequestCardDetailsComponent implements OnInit {
       status: 'verified',
     }).subscribe(res => this.request = res);
   }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
       data: {
