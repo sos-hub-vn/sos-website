@@ -10,7 +10,7 @@
           <p>Ảnh đại diện</p>
           <div class="fileUpload btn btn--browse">
             <span>+ Thay đổi</span>
-            <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event)"> 
+            <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event, group.id)"> 
           </div>
         </div>
         <img class="group_items_image" width="50px" src="{{ group?.avatar }}" alt="image" />

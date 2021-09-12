@@ -137,7 +137,6 @@ export class GroupDetailComponent implements OnInit {
     };
     this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
       if(data){
-        console.log(data);
         this.notification.success("Xoá thành công");
         this.group.members = data.data.members;
         return;
@@ -146,11 +145,21 @@ export class GroupDetailComponent implements OnInit {
     })
   }
 
-  onFileSelected(event:any) {
+  onFileSelected(event:any, id: any) {
     let file = event.target.files[0];
     this.s3Service.uploadImage(file).subscribe(res => {
       if(res){
-        console.log(res);
+        let data = {
+          "avatar" : res
+        }
+        this.GroupService.update(id, data, {}).subscribe((data: any)=>{
+          if(data){
+            this.notification.success("Thay đổi hình đại diện thành công");
+            this.group = data;
+            return;
+          }
+          this.notification.error("Thay đổi hình đại diện thất bại");
+        });
       }
     })
   }
