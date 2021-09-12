@@ -128,11 +128,11 @@
 
 ::ng-deep .dialog-volunteer {
   width: 600px;
-  max-height: 80vh;
-  overflow-y: scroll;
   .mat-dialog-container {
     box-shadow: unset;
     border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: scroll;
   }
 }
 
