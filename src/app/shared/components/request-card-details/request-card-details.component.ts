@@ -101,6 +101,10 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   show(data: any) {
     let content = data.target.value;
+    if(!this.storageService.userInfo){
+      this.notification.error("Hãy đăng nhập hoặc đăng kí để được bình luận")
+      return
+    }
     if (content)
       this.NewsService.create(
         { ...this.defaultComment, content: content },

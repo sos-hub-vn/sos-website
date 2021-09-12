@@ -7,9 +7,13 @@
         <p>{{ supporter?.contact_info?.phone_number }}</p>
       </div>
     </div>
-
-    <div>
-      <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuSupportTrigger
+    <div class="status-btn" *ifRoles="['GUEST']" >
+      <button mat-stroked-button color="primary"  >
+        {{getStatusView(mapSupportStatus)}}</button>
+    </div>
+    
+    <div  *ifRoles="['OPERATOR', 'USER', 'ADMIN']">
+      <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuSupportTrigger 
       [disabled]="getStatusSteps(mapSupportStatus).length === 0">
         {{getStatusView(mapSupportStatus)}}<mat-icon>expand_more</mat-icon></button>
       <mat-menu #menu="matMenu" >

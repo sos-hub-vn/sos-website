@@ -1,5 +1,5 @@
 <div class="request_card" [ngStyle]="{'border': '1px solid '+ mapPriority.get(request?.color_info?.color)}">
-  <span *ngIf='user;' class="bookmark">
+  <span class="bookmark">
     <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
       style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
     </mat-icon>
