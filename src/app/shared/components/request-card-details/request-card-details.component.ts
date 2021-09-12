@@ -132,20 +132,6 @@ export class RequestCardDetailsComponent implements OnInit {
     });
   }
 
-  updateSupportStatus(item: string){
-    const status = this.mapSupportStatus.get(item)?.status || ''
-    this.UrgentRequestService.updateSupporterStatus(
-      this.request.id || '',
-      {
-        type: 'group',
-        supporter_id: this.storageService.userInfo.groups[0].id,
-        support_status: status
-      }
-    ).subscribe(result => {
-      this.supporters = result.supporters || []
-    });
-  }
-
   getStatusView(map: Map<string, IBaseStatus>): string{
     return map.get(this.request?.status || '')?.status_view || ''
   }
