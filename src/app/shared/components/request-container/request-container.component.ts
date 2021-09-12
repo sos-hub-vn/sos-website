@@ -28,7 +28,10 @@ export class RequestContainerComponent implements OnInit {
   chooseRequest(request: ISOSRequest) {
     const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
       data: request,
+      hasBackdrop: false
     });
+
+    dialogRef.afterDismissed().subscribe(res => this.requests = this.requests?.map(element => element.id === res.id? res: element ))
 
   }
 

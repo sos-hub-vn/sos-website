@@ -77,7 +77,7 @@ export class ConstantsService {
       action: 'open',
       action_view: 'Mở',
       status: 'open',
-      status_view: 'Đã mở',
+      status_view: 'Đã Tham gia',
       next_step: ['executing', 'canceled', 'pending']
     })
     this.SUPPORT_STATUS.set('canceled', {

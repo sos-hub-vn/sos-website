@@ -63,7 +63,7 @@ export class RequestCardDetailsComponent implements OnInit {
     target_id: this.request.id,
   };
   onClose() {
-    this.bottomRef.dismiss();
+    this.bottomRef.dismiss(this.request);
   }
   mark($event: any, action?: string) {
     console.log(action);
@@ -126,12 +126,12 @@ export class RequestCardDetailsComponent implements OnInit {
       return
     }
     const dialogRef = this.dialog.open(JoinRequestComponent, {
-      data: { request_id: this.request.id },
+      data: { request_id: this.request.id }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if(result != null){
-        this.supporters = result.supporters
+        this.request = result
       }
     });
   }
@@ -177,10 +177,8 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   confirmStatus(): void {
     this.UrgentRequestService.verifyRequest(this.request.id, {
-      status: this.new_status,
-    }).subscribe();
-    this.cur_status = this.new_status;
-    this.isOpen = false;
+      status: 'verified',
+    }).subscribe(res => this.request = res);
   }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
@@ -217,8 +215,11 @@ export class RequestCardDetailsComponent implements OnInit {
 })
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
+  group_type: string = 'user';
+  groups: any[] = [];
+
   joinRequest: IJoinRequest = {
-    type: 'group',
+    type: 'user',
     supporter_id: '',
   };
   constructor(
@@ -231,12 +232,16 @@ export class JoinRequestComponent {
     this.SupportTypesService.findAll().subscribe(
       (result) => (this.supportTypes = result)
     );
+    this.groups = this.storageService.userInfo?.groups || []
+    if(this.groups.length > 0){
+      this.group_type = 'group'
+    }
   }
   async onSubmit(data: any) {
-    console.log(data);
+    this.joinRequest.type = this.group_type;
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-   this.joinRequest.supporter_id = this.storageService.userInfo.groups[0].id;
+   this.joinRequest.supporter_id = this.group_type == 'user'?this.storageService.userInfo?.id:this.storageService.userInfo?.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest

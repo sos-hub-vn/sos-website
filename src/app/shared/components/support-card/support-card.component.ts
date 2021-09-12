@@ -11,6 +11,7 @@ import { ConstantsService } from '../../constant/constants.service';
 })
 export class SupportCardComponent implements OnInit {
   @Input() supporter?: any;
+  @Input() requestId?: string;
   isMe: boolean = false;
 
   mapSupportStatus!: Map<string, IBaseStatus>;
@@ -29,8 +30,6 @@ export class SupportCardComponent implements OnInit {
     this.mapSupportStatus = this.constantsService.SUPPORT_STATUS;
   }
 
-
-
   getStatusView(map: Map<string, IBaseStatus>): string{
     return map.get(this.supporter?.status || '')?.status_view || ''
   }
@@ -47,8 +46,12 @@ export class SupportCardComponent implements OnInit {
     const status = this.mapSupportStatus.get(item)?.status || ''
     this.supporter.support_status = status;
     this.urgentRequestService.updateSupporterStatus(
-      this.supporter.id || '',
-      this.supporter
+      this.requestId || '',
+     {
+       supporter_id: this.supporter.id,
+       support_status: status,
+       type: this.supporter.type
+     }
     ).subscribe(result => {
       this.supporter = result.supporters?.find((element: any) => this.supporter.id === element?.id) || {}
     });
