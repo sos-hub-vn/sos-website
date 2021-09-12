@@ -155,7 +155,6 @@ export class RequestFormComponent implements OnInit {
     console.log(event.target.files[0])
     let file = event.target.files[0]
     this.s3Service.uploadImage(file).subscribe(res => {
-      this.myScrollContainer.nativeElement.scrollTop = Math.max(0, this.myScrollContainer.nativeElement.scrollHeight - this.myScrollContainer.nativeElement.offsetHeight);
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res
@@ -180,4 +179,5 @@ export class RequestFormComponent implements OnInit {
   deleteImg(order: number){
     this.medias.splice(order,1)
   }
+
 }
