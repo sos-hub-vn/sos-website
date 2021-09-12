@@ -78,7 +78,8 @@ export class GroupComponent implements OnInit {
       data: group
     }).afterClosed().subscribe((result: any) => {
       if(result){
-        this.searchData = this.groups.filter((item: any) => item.id !== result.data.data.id);
+        let data = result.data;
+        this.searchData = this.groups.map(element => data.id === element.id ? data: element);
       }
     })
   }

@@ -31,7 +31,7 @@ export class GroupDetailComponent implements OnInit {
   ngOnInit(): void {}
 
   onClose() {
-    this.dialogRef.close();
+    this.dialogRef.close({data: this.group});
   }
 
   openUpdateName(cur_name: any, id: any) {
