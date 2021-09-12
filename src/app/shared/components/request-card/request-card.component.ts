@@ -29,7 +29,6 @@ export class RequestCardComponent implements OnInit {
         if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
       })
   }
-
   ngOnInit(): void {
     this.mapPriority = this.ConstantsService.MAP_PRIORITY;
     this.mapStatus = this.ConstantsService.MAP_STATUS

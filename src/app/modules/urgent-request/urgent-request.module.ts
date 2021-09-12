@@ -27,6 +27,7 @@ import { RequestFormComponent } from './request-form/request-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
     MatRadioModule,
     MatOptionModule,
     MatSelectModule,
+    MatCheckboxModule,
     FormsModule,
     MatTabsModule,
     MatBadgeModule,
