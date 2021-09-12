@@ -20,11 +20,14 @@ import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
   user: any;
+  mobileScreen: string = "MAP"
   constructor(
 
     private StorageService: StorageService
   ) { }
-
+  toggleMap() {
+    if (this.mobileScreen==='MAP') this.mobileScreen="REQUESTS"; else this.mobileScreen='MAP'
+  }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
 

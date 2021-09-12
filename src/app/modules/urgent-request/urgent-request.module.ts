@@ -61,7 +61,8 @@ const routes: Routes = [
     MatSelectModule,
     FormsModule,
     MatTabsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatButtonModule
   ],
 })
 export class UrgentRequestModule { }
