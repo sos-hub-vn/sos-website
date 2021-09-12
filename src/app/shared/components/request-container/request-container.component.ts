@@ -1,5 +1,6 @@
 import { ScrollTrackerDirective } from './../../directives/scroll-tracker.directive';
 import { Component, EventEmitter, Input, OnInit, Output, Directive } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RequestCardDetailsComponent } from '../request-card-details/request-card-details.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 

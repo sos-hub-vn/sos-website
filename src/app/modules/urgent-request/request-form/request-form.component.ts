@@ -56,6 +56,7 @@ export class RequestFormComponent implements OnInit {
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
+    console.log("formConstruct");
   }
 
   fetchInit() {
@@ -104,6 +105,7 @@ export class RequestFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("formInit");
     var l: string = '';
     let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);

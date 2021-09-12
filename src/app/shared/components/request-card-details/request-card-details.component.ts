@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../core/services/general.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
@@ -52,6 +53,7 @@ export class RequestCardDetailsComponent implements OnInit {
   mapPriority: any
   news: INew[] = [];
   user: any;
+  create_time:string='';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
@@ -73,6 +75,7 @@ export class RequestCardDetailsComponent implements OnInit {
         if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
       })
   }
+
   constructor(
     public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
@@ -84,7 +87,8 @@ export class RequestCardDetailsComponent implements OnInit {
     private StorageService: StorageService,
     private ConstantsService: ConstantsService,
     private storageService: StorageService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private generalService: GeneralService
   ) {
     if (this.request.status === 'open') {
       this.isOpen = true;
@@ -203,6 +207,7 @@ export class RequestCardDetailsComponent implements OnInit {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
     this.user = this.StorageService.userInfo;
+    this.create_time=this.generalService.diffDate(new Date(this.request?.created_time!))
   }
 }
 @Component({
