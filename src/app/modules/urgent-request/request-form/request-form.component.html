@@ -8,6 +8,14 @@
   <div #content class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
     <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Người cần hỗ trợ là</mat-label>
+      <mat-select value="[]" ngModel name="requester_object_status" multiple>
+        <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Loại yêu cầu</mat-label>
       <mat-select ngModel name="support_types" multiple>
         <mat-option *ngFor="let type of supportTypes" [value]="type">
@@ -77,14 +85,7 @@
         <input matInput placeholder="Ghi chú" value="" />
       </mat-form-field>
     </fieldset>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Người cần hỗ trợ là</mat-label>
-      <mat-select value="[]" ngModel name="requester_object_status" multiple>
-        <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
-          {{ status.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+
     <br />
 
     <a style="cursor: pointer; color: red; margin: 10px 0;" (click)="pickLocation()">Chọn vị trí trên bản đồ </a>

@@ -1,5 +1,5 @@
 import { StorageService } from './../services/storage.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ export class UsersService extends RestService<IUser> {
   constructor(http: HttpClient, private StorageService: StorageService) {
     super(http, 'users');
   }
+  userSubject = new Subject<IUser>();
 
   confirm(body: IUser, options: any): Observable<any> {
     return this.http
@@ -39,6 +40,7 @@ export class UsersService extends RestService<IUser> {
       .get<{ data: IUser }>(`${this.host}/users/profile`)
       .pipe(map((res) => {
         this.StorageService.userInfo = res.data;
+        this.userSubject.next(res.data)
         return res.data
       }));
   }

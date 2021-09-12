@@ -42,6 +42,8 @@ import { RequestContainerComponent } from './components/request-container/reques
 import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { IfNotRoleDirective } from '../core/directives/if-not-role.directive';
+import { IfRoleDirective } from '../core/directives/if-role.directive';
 @NgModule({
   declarations: [
     CardComponent,
@@ -68,6 +70,8 @@ import { MatMenuModule } from '@angular/material/menu';
     RequestContainerComponent,
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
+    IfRoleDirective,
+    IfNotRoleDirective
   ],
   imports: [
     CommonModule,
@@ -98,6 +102,8 @@ import { MatMenuModule } from '@angular/material/menu';
     RequestContainerComponent,
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
+    IfRoleDirective,
+    IfNotRoleDirective
   ],
   providers: [
     HttpClientModule,

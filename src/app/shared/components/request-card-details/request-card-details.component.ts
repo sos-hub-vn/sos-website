@@ -1,3 +1,4 @@
+import { GeneralService } from './../../../core/services/general.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
@@ -52,6 +53,7 @@ export class RequestCardDetailsComponent implements OnInit {
   mapPriority: any
   news: INew[] = [];
   user: any;
+  create_time:string='';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
@@ -61,7 +63,7 @@ export class RequestCardDetailsComponent implements OnInit {
     target_id: this.request.id,
   };
   onClose() {
-    this.bottomRef.dismiss();
+    this.bottomRef.dismiss(this.request);
   }
   mark($event: any, action?: string) {
     console.log(action);
@@ -73,6 +75,7 @@ export class RequestCardDetailsComponent implements OnInit {
         if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
       })
   }
+
   constructor(
     public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
@@ -84,7 +87,8 @@ export class RequestCardDetailsComponent implements OnInit {
     private StorageService: StorageService,
     private ConstantsService: ConstantsService,
     private storageService: StorageService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private generalService: GeneralService
   ) {
     if (this.request.status === 'open') {
       this.isOpen = true;
@@ -97,6 +101,10 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   show(data: any) {
     let content = data.target.value;
+    if(!this.storageService.userInfo){
+      this.notification.error("Hãy đăng nhập hoặc đăng kí để được bình luận")
+      return
+    }
     if (content)
       this.NewsService.create(
         { ...this.defaultComment, content: content },
@@ -122,27 +130,13 @@ export class RequestCardDetailsComponent implements OnInit {
       return
     }
     const dialogRef = this.dialog.open(JoinRequestComponent, {
-      data: { request_id: this.request.id },
+      data: { request_id: this.request.id }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if(result != null){
-        this.supporters = result.supporters
+        this.request = result
       }
-    });
-  }
-
-  updateSupportStatus(item: string){
-    const status = this.mapSupportStatus.get(item)?.status || ''
-    this.UrgentRequestService.updateSupporterStatus(
-      this.request.id || '',
-      {
-        type: 'group',
-        supporter_id: this.storageService.userInfo.groups[0].id,
-        support_status: status
-      }
-    ).subscribe(result => {
-      this.supporters = result.supporters || []
     });
   }
 
@@ -187,10 +181,8 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   confirmStatus(): void {
     this.UrgentRequestService.verifyRequest(this.request.id, {
-      status: this.new_status,
-    }).subscribe();
-    this.cur_status = this.new_status;
-    this.isOpen = false;
+      status: 'verified',
+    }).subscribe(res => this.request = res);
   }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
@@ -217,6 +209,7 @@ export class RequestCardDetailsComponent implements OnInit {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
     this.user = this.StorageService.userInfo;
+    this.create_time=this.generalService.diffDate(new Date(this.request?.created_time!))
   }
 }
 @Component({
@@ -226,8 +219,11 @@ export class RequestCardDetailsComponent implements OnInit {
 })
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
+  group_type: string = 'user';
+  groups: any[] = [];
+
   joinRequest: IJoinRequest = {
-    type: 'group',
+    type: 'user',
     supporter_id: '',
   };
   constructor(
@@ -240,12 +236,16 @@ export class JoinRequestComponent {
     this.SupportTypesService.findAll().subscribe(
       (result) => (this.supportTypes = result)
     );
+    this.groups = this.storageService.userInfo?.groups || []
+    if(this.groups.length > 0){
+      this.group_type = 'group'
+    }
   }
   async onSubmit(data: any) {
-    console.log(data);
+    this.joinRequest.type = this.group_type;
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-   this.joinRequest.supporter_id = this.storageService.userInfo.groups[0].id;
+   this.joinRequest.supporter_id = this.group_type == 'user'?this.storageService.userInfo?.id:this.storageService.userInfo?.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest

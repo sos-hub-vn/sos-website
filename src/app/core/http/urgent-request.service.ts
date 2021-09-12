@@ -67,7 +67,7 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
 
   updateSupporterStatus(request_id: string, body: ISupporterUpdate): Observable<ISOSRequest> {
     return this.http
-      .put<{
+      .post<{
         data: ISOSRequest;
       }>(`${this.host}/sos_requests/${request_id}/support`, body)
       .pipe(map((res) => res.data));
