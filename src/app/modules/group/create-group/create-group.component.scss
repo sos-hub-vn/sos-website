@@ -1,10 +1,10 @@
 ::ng-deep.diaglog-createGroup{
   width: 600px;
-  overflow: hidden;
   padding: 20px;
   .mat-dialog-container{
     box-shadow: unset;
     border-radius: 10px;
+    overflow: hidden;
   }
 }
 
