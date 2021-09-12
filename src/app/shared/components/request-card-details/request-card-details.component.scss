@@ -56,11 +56,33 @@ a {
 }
 
 
+<<<<<<< HEAD
 @media only screen and (max-width: 600px) {
+=======
+@media screen and (max-width: 599px) {
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
   .request_sesstion {
     border-right: none !important;
     padding-top: 50px !important;
   }
 }
 
+<<<<<<< HEAD
+=======
+@media screen and (max-width: 599px) {
+  .info_section {
+    width: 100% !important;
+  }
+}
+
+.mat-chip{
+  background-color:#FCE7E5 ;
+}
+
+.circle {
+  font-size: 10px;
+  height: 10px;
+  width: 20px !important;
+}
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
 

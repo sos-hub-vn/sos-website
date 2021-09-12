@@ -35,14 +35,29 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 export class RequestCardDetailsComponent implements OnInit {
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string; }[] | undefined;
+<<<<<<< HEAD
   mapPriority = new Map();
   mapStatus = new Map();
+=======
+
+  new_status: String = '';
+  cur_status?: String = this.request.status;
+  isOpen: boolean = false;
+  status: string[] = ['verified', 'accepted', 'rejected'];
+
+  mapPriority: any
+  mapStatus: any
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
   news: INew[] = [];
   user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
+<<<<<<< HEAD
     subject: '',
+=======
+    subject: 'new_comment',
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
@@ -71,6 +86,9 @@ export class RequestCardDetailsComponent implements OnInit {
     private StorageService: StorageService,
     private ConstantsService: ConstantsService
   ) {
+    if (this.request.status === 'open') {
+      this.isOpen = true;
+    }
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
     );
@@ -119,6 +137,19 @@ export class RequestCardDetailsComponent implements OnInit {
       data: { request_id: this.request.id, status: this.request.status },
     });
   }
+<<<<<<< HEAD
+=======
+  setStatus(status: string): void {
+    this.new_status = status;
+  }
+  confirmStatus(): void {
+    this.UrgentRequestService.verifyRequest(this.request.id, {
+      status: this.new_status,
+    }).subscribe();
+    this.cur_status = this.new_status;
+    this.isOpen = false;
+  }
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
       data: {

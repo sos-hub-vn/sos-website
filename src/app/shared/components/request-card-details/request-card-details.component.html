@@ -11,6 +11,7 @@
     fxLayout="row"
     fxLayoutAlign="center"
   >
+<<<<<<< HEAD
     <div style="max-width: 450px">
       <div
         fxLayout="row"
@@ -25,10 +26,58 @@
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-icon>check</mat-icon>
           <a (click) = "openConfirmDialog()">Xác thực</a>
+=======
+    <div style="width: 450px; max-width: 100%" class="info_section">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+        fxLayoutGap="10px"
+        style="margin-bottom: 10px; width: 100%"
+      >
+        <div fxLayout="row">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="center center"
+            style="margin-right: 10px"
+          >
+            <mat-icon>pin_drop</mat-icon>
+            <a (click)="openProposeDialog()">Đề xuất cho nhóm</a>
+          </div>
+          <div
+            *ngIf="isOpen"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+          >
+            <mat-icon>check</mat-icon>
+            <a (click)="confirmStatus()">Xác thực</a>
+          </div>
+          <div *ngIf="!isOpen" fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon style="color: #05944f">check</mat-icon>
+            <a style="color: #05944f; cursor: none" disabled>Đã xác thực</a>
+          </div>
+        </div>
+        <div>
+          <mat-form-field
+            *ngIf="isOpen"
+            style="width: 150px; border-radius: 22px; margin-bottom: -1.25em"
+            appearance="outline"
+          >
+            <mat-label>Trạng thái</mat-label>
+            <mat-select>
+              <mat-option
+                *ngFor="let each of status"
+                [value]="each"
+                (click)="setStatus(each)"
+                >{{ each }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
         <mat-chip-list aria-label="tag">
+<<<<<<< HEAD
           <mat-chip color="primary" selected>
             <mat-icon>error</mat-icon
             >{{ mapPriority.get(request?.priority_type!) }}
@@ -47,6 +96,19 @@
             {{ object.name }}</mat-chip
           >
           <mat-chip> <mat-icon>done</mat-icon>{{request?.status}} </mat-chip>
+=======
+          <mat-chip color="accent" selected>
+            <mat-icon class="circle">circle</mat-icon
+            >{{ mapPriority.get(request?.priority_type!) }}
+          </mat-chip>
+          <mat-chip *ngFor="let type of request?.support_types">{{
+            type.name
+          }}</mat-chip>
+          <mat-chip *ngFor="let object of request?.requester_object_status">
+            {{ object.name }}</mat-chip
+          >
+          <mat-chip>{{ cur_status }} </mat-chip>
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
         </mat-chip-list>
         <br />
         <h3>
@@ -108,13 +170,27 @@
         <p style="font-weight: bold; font-size: 17px">Nhóm trợ giúp</p>
         <app-button
           height="35"
+<<<<<<< HEAD
           color="primary"
+=======
+          color="accent"
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
           text="Tham gia trợ giúp"
           (click)="openDialog()"
         >
         </app-button>
+<<<<<<< HEAD
         <div fxLayout="column" fxLayoutGap="10px" style="margin-top: 15px" *ngFor = 'let supporter of request?.supporters'>
           <app-support-card [supporter] = supporter></app-support-card>
+=======
+        <div
+          fxLayout="column"
+          fxLayoutGap="10px"
+          style="margin-top: 15px"
+          *ngFor="let supporter of request?.supporters"
+        >
+          <app-support-card [supporter]="supporter"></app-support-card>
+>>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
         </div>
       </div>
     </div>
