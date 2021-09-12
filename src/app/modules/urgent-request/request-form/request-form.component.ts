@@ -67,16 +67,10 @@ export class RequestFormComponent implements OnInit {
     });
   }
   async onSubmit(data: ISOSRequest) {
-<<<<<<< HEAD
     data.requester_type = 'guest';
     data.medias = this.medias;
     data.requester_type = '';
     data.medias = [];
-=======
-    console.log(this.medias)
-    data.requester_type = 'guest';
-    data.medias = this.medias;
->>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
     const user = this.StorageService.userInfo;
     if (user!== null && user.role !== 'GUEST') {
       data.requester_type = 'user';
