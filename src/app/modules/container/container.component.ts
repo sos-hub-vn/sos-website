@@ -75,6 +75,7 @@ export class ContainerComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((result: any) => {
       this.checkLogin();
+      window.location.reload();
     });
   }
 

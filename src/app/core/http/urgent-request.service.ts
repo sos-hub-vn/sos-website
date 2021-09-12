@@ -72,7 +72,6 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
         })
       );
   }
-
   verifyRequest(request_id?: string, body?: any) {
     return this.http
       .post(`${this.host}/sos_requests/${request_id}/status`, body)

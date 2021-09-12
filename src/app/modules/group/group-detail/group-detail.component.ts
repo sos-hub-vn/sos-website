@@ -1,11 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { DeleteGroupComponent } from './delete-group/delete-group.component';
+import { SearchMemberComponent } from './search-member/search-member.component';
 import { UpdateAddressComponent } from './update-address/update-address.component';
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
 import { UpdateSupportComponent } from './update-support/update-support.component';
+import { S3Service } from "../../../core/services/s3.service";
 
 @Component({
   selector: 'app-group-detail',
@@ -13,6 +17,19 @@ import { UpdateSupportComponent } from './update-support/update-support.componen
   styleUrls: ['./group-detail.component.scss'],
 })
 export class GroupDetailComponent implements OnInit {
+
+  currentInput:any;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup,
+    public dialogRef: MatDialogRef<GroupDetailComponent>,
+    public dialog: MatDialog,
+    private GroupService: VolunteerGroupService,
+    private notification: NotificationService,
+    private s3Service: S3Service
+  ) {}
+
+  ngOnInit(): void {}
+
   onClose() {
     this.dialogRef.close();
   }
@@ -20,21 +37,41 @@ export class GroupDetailComponent implements OnInit {
   openUpdateName(cur_name: any, id: any) {
     this.dialog.open(UpdateNameComponent, {
       panelClass: 'nameType',
+      disableClose: true,
       data: { cur_name: cur_name, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.name = result.data.name;
+      }
     });
   }
 
   openUpdatePhone(cur_phone: any, id: any) {
     this.dialog.open(UpdatePhoneComponent, {
       panelClass: 'phoneType',
+      disableClose: true,
       data: { cur_phone: cur_phone, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.contact_info = result.data.contact_info;
+      }
     });
   }
 
-  openUpdateAddress(province: any, provinceId: any,wardName: any, wardCode: any,districtName: any, districtCode: any, address:any, id: any) {
+  openUpdateAddress(
+    province: any,
+    provinceId: any,
+    wardName: any,
+    wardCode: any,
+    districtName: any,
+    districtCode: any,
+    address: any,
+    id: any
+  ) {
     this.dialog.open(UpdateAddressComponent, {
       panelClass: 'addressType',
-      data: { 
+      disableClose: true,
+      data: {
         province: province,
         provinceId: provinceId,
         wardName: wardName,
@@ -42,29 +79,79 @@ export class GroupDetailComponent implements OnInit {
         districtName: districtName,
         districtCode: districtCode,
         address: address,
-        id: id 
+        id: id,
       },
-    });
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.address_info = result.data.address_info;
+      }
+    })
   }
 
   openUpdateSupport(cur_support: any, id: any) {
     this.dialog.open(UpdateSupportComponent, {
       panelClass: 'supportType',
+      disableClose: true,
       data: { cur_support: cur_support, id: id },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.detail_info = result.data.detail_info;
+      }
     });
   }
 
-  openDeleteGroup(id: any){
+  openDeleteGroup(id: any) {
     this.dialog.open(DeleteGroupComponent, {
       panelClass: 'deleteType',
+      disableClose: true,
       data: { id: id },
-    });
+    }).afterClosed().subscribe((result:any) => {
+      if(result){
+        this.dialogRef.close({data: result.data});
+      }
+    })
   }
-  constructor(
-    public dialogRef: MatDialogRef<GroupDetailComponent>,
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup
-  ) {}
 
-  ngOnInit(): void {}
+  openAddMember(members: any, id: any) {
+    this.dialog.open(SearchMemberComponent, {
+      panelClass: 'addMember',
+      disableClose: true,
+      data: {
+        members: members,
+        id: id,
+      },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result.data.members){
+        this.group.members = result.data.members;
+      }
+    })
+  }
+
+  removeMember(groupId: any, memberId: any) {
+    let data = {
+      "members": [
+        {
+          "id": memberId,
+        },
+      ],
+    };
+    this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
+      if(data){
+        console.log(data);
+        this.notification.success("Xoá thành công");
+        this.group.members = data.data.members;
+        return;
+      }
+      this.notification.error("Xoá thất bại");
+    })
+  }
+
+  onFileSelected(event:any) {
+    let file = event.target.files[0];
+    this.s3Service.uploadImage(file).subscribe(res => {
+      if(res){
+        console.log(res);
+      }
+    })
+  }
 }
