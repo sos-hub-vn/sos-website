@@ -22,6 +22,10 @@
         {{ (request?.requester_object_status)![0]?.name! }}</mat-chip
       >
     </div>
+    <!-- <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
+      <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
+    </div> -->
+    <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
     <div *ngIf="type == 'full-width'">
       <mat-chip
         *ngFor="let type of request?.support_types!"
@@ -37,6 +41,7 @@
       <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}"> {{mapStatus.get('verified')?.icon}}</mat-icon> 
       <p>{{ mapStatus.get('verified')?.status_view }}</p>
     </div>
+    <mat-chip>{{ request?.status }} </mat-chip>
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>

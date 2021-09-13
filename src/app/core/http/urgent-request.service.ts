@@ -80,7 +80,6 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
         map((res) => res.data)
       );
   }
-
   verifyRequest(request_id?: string, body?: any) {
     return this.http
       .post<{data: ISOSRequest}>(`${this.host}/sos_requests/${request_id}/status`, body)

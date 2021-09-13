@@ -36,7 +36,6 @@ export class GroupComponent implements OnInit {
         }
       }
       this.groups = result;
-      console.log(this.groups);
       this.searchData = this.groups;
     });
     this.SupportTypesService.findAll().subscribe((result) => {
@@ -50,7 +49,6 @@ export class GroupComponent implements OnInit {
   }
 
   filter(data: any){
-    console.log(data.value);
     if(data.value.length === 0){
       this.searchData = this.groups;
       return;
@@ -63,14 +61,30 @@ export class GroupComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(CreateGroupComponent);
+    this.dialog.open(CreateGroupComponent,{
+      panelClass: 'diaglog-createGroup',
+      disableClose: true,
+    }).afterClosed().subscribe((result: any) => {
+      if(result){
+        this.fetchInit();
+      }
+    })
   }
 
   openDialogGroup(group: IVolunteerGroup): void {
     const dialogRef = this.dialog.open(GroupDetailComponent, {
       panelClass: 'dialog-volunteer',
+      disableClose: true,
       data: group
-    });
+    }).afterClosed().subscribe((result: any) => {
+      if(result){
+        if(result.mess == 'delete'){
+          this.searchData = this.groups.filter(el => el.id !== result.data.data.id);
+          return;
+        }
+        this.searchData = this.groups.map(element => result.data.id === element.id ? result.data: element);
+      }
+    })
   }
 
   ngOnInit(): void {}
