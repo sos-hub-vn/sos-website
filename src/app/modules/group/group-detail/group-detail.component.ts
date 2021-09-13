@@ -107,7 +107,7 @@ export class GroupDetailComponent implements OnInit {
       data: { id: id },
     }).afterClosed().subscribe((result:any) => {
       if(result){
-        this.dialogRef.close({data: result.data});
+        this.dialogRef.close({data: result.data, mess: 'delete'});
       }
     })
   }
