@@ -38,7 +38,8 @@
         <sos-input ngModel name="address" matInput placeholder="Địa chỉ" [(ngModel)]="group.address" [required]="true"
           label="Địa chỉ"></sos-input>
       </fieldset>
-      <button mat-flat-button type="submit" class="submit-btn" color="accent" cdkFocusInitial>
+      <button mat-flat-button type="submit" class="submit-btn" color="accent"
+        (click)="checkSubmit(form)" cdkFocusInitial>
         Lưu
       </button>
     </form>

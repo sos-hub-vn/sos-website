@@ -17,7 +17,8 @@
                     </mat-select>
                 </mat-form-field>
             </fieldset>
-            <button mat-flat-button type="submit" class="submit-btn" color="accent" cdkFocusInitial>
+            <button mat-flat-button type="submit" class="submit-btn" color="accent"
+                (click)="checkSubmit(form)" cdkFocusInitial>
                 Lưu
             </button>
         </form>
