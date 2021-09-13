@@ -53,7 +53,7 @@
     <button matBadge="{{filterObject.object_status?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
       class="menuTrigger" mat-stroked-button [matMenuTriggerFor]="object">Đối tượng</button>
     <mat-menu #object="matMenu">
-      <button *ngFor="let object of requesterObjectStatus" mat-menu-item (click)="selectObject(object.key, $event)">
+      <button *ngFor="let object of requesterObjectStatus" mat-menu-item (click)="selectObject(object.key!, $event)">
         <mat-icon class="empty">check_box_outline_blank</mat-icon>
         <mat-icon class="checked red">check_box</mat-icon>{{ object.name }}
       </button>

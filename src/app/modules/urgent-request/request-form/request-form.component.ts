@@ -73,10 +73,12 @@ export class RequestFormComponent implements OnInit {
       this.provinces = result;
     });
     this.SupportTypesService.findAll().subscribe((result) => {
-      this.supportTypes = result;
+      this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
+      console.log(this.supportTypes);
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
-      this.requesterObjectStatus = result;
+      this.requesterObjectStatus = result.map(x => { return { name: x.name, type: x.key } });
+      console.log(this.requesterObjectStatus);
     });
   }
   onSubmit(data: ISOSRequest) {
@@ -85,8 +87,8 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = 'guest';
     data.medias = this.medias;
     const user = this.StorageService.userInfo;
-    console.log(user, user!== null)
-    if (user!== null && user?.role !== 'GUEST') {
+    console.log(user, user !== null)
+    if (user !== null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
