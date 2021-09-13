@@ -57,7 +57,7 @@ export class RequestCardDetailsComponent implements OnInit {
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: 'new_comment',
+    subject: '',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
