@@ -22,18 +22,10 @@
         {{ (request?.requester_object_status)![0]?.name! }}</mat-chip
       >
     </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     <!-- <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
       <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
     </div> -->
     <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
-=======
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
     <div *ngIf="type == 'full-width'">
       <mat-chip
         *ngFor="let type of request?.support_types!"
@@ -45,18 +37,11 @@
         {{ status.name! }}</mat-chip
       >
     </div>
-<<<<<<< HEAD
     <div class="chip icon-16" [ngStyle]="{'display': request?.verify_status === 'verified'? 'inline flex': 'none', 'background-color': mapStatus.get('verified')?.bg_color, color: mapStatus.get('verified')?.color}">
       <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}"> {{mapStatus.get('verified')?.icon}}</mat-icon> 
       <p>{{ mapStatus.get('verified')?.status_view }}</p>
     </div>
-=======
     <mat-chip>{{ request?.status }} </mat-chip>
-<<<<<<< HEAD
-=======
->>>>>>> 4f3e09d07a59274a809bc75095734f48313df095
->>>>>>> master
->>>>>>> 261b773ca14f463b8c29480a8b6bb1b0b3255450
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>

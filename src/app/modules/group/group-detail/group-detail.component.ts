@@ -121,7 +121,7 @@ export class GroupDetailComponent implements OnInit {
         id: id,
       },
     }).afterClosed().subscribe((result: any)=>{
-      if(result){
+      if(result.data.members){
         this.group = result.data;
       }
     })
