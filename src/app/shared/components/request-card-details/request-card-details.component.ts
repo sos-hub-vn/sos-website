@@ -50,7 +50,7 @@ export class RequestCardDetailsComponent implements OnInit {
   status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>; 
   mapSupportStatus!: Map<string, IBaseStatus>;
-  mapPriority: any;
+  mapPriority: any
   news: INew[] = [];
   user: any;
   create_time:string='';
