@@ -19,7 +19,6 @@ import { UpdateNameComponent } from './group-detail/update-name/update-name.comp
 import { UpdatePhoneComponent } from './group-detail/update-phone/update-phone.component';
 import { UpdateSupportComponent } from './group-detail/update-support/update-support.component';
 import { DeleteGroupComponent } from './group-detail/delete-group/delete-group.component';
-import { SearchMemberComponent } from './group-detail/search-member/search-member.component';
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +26,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [GroupComponent, GroupDetailComponent, CreateGroupComponent, UpdateAddressComponent, UpdateNameComponent, UpdatePhoneComponent, UpdateSupportComponent, DeleteGroupComponent, SearchMemberComponent],
+  declarations: [GroupComponent, GroupDetailComponent, CreateGroupComponent, UpdateAddressComponent, UpdateNameComponent, UpdatePhoneComponent, UpdateSupportComponent, DeleteGroupComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

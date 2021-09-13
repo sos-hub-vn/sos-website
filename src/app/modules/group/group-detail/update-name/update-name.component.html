@@ -12,6 +12,7 @@
           name="name"
           placeholder="Tên nhóm"
           label="Tên nhóm"
+          defaultValue="123"
           [required]="true"
           [value]="dataFetch"
         ></sos-input>
@@ -20,6 +21,7 @@
           type="submit"
           class="submit-btn"
           color="accent"
+          (click)="checkSubmit(form)"
           cdkFocusInitial
         >
           Lưu

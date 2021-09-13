@@ -1,19 +1,14 @@
 ::ng-deep .errNotif {
   color: white;
-  background: #dc3545!important;
+  background: #f44336 !important;
 }
 
 ::ng-deep .warnNotif {
   color: black;
-  background: #ffc107!important;
+  background: yellow !important;
 }
 
 ::ng-deep .infoNotif {
-  color: #ffffff;
-  background: #007bff!important;
-}
-
-::ng-deep .successNotif {
-  color: #ffffff;
-  background: #28a745!important;
+  color: black;
+  background: white !important;
 }
