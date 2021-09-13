@@ -43,20 +43,21 @@ export class RequestCardDetailsComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string; }[] | undefined;
-  mapPriority = new Map();
+
   new_status: String = '';
   cur_status?: String = this.request.status;
   isOpen: boolean = false;
   status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>; 
   mapSupportStatus!: Map<string, IBaseStatus>;
+  mapPriority: any;
   news: INew[] = [];
   user: any;
   create_time:string='';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: 'new_comment',
+    subject: '',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
