@@ -13,8 +13,6 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
-  ElementRef,
-  ViewChild,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
@@ -26,7 +24,6 @@ import { S3Service } from 'src/app/core/services/s3.service';
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
-  @ViewChild('content') private myScrollContainer!: ElementRef;
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
@@ -56,7 +53,6 @@ export class RequestFormComponent implements OnInit {
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
-    console.log("formConstruct");
   }
 
   fetchInit() {
@@ -71,9 +67,10 @@ export class RequestFormComponent implements OnInit {
     });
   }
   async onSubmit(data: ISOSRequest) {
-    console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
+    data.requester_type = '';
+    data.medias = [];
     const user = this.StorageService.userInfo;
     if (user!= null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
@@ -105,10 +102,15 @@ export class RequestFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("formInit");
     var l: string = '';
     let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);
+  }
+
+  uploadImage(){
+
+    
+
   }
 
   pickLocation() {

@@ -54,15 +54,6 @@ a {
   text-decoration-thickness: 2px;
   cursor: pointer;
 }
-
-
-@media screen and (max-width: 599px) {
-  .request_sesstion {
-    border-right: none !important;
-    padding-top: 50px !important;
-  }
-}
-
 @media screen and (max-width: 599px) {
   .info_section {
     width: 100% !important;
@@ -78,9 +69,6 @@ a {
   height: 10px;
   width: 20px !important;
 }
-
 .status-btn{
   border-radius: 20px;
 }
-
-
