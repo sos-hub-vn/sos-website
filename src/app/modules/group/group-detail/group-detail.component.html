@@ -13,7 +13,7 @@
             <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event, group.id)"> 
           </div>
         </div>
-        <img class="group_items_image" width="50px" src="{{ group?.avatar }}" alt="image" />
+        <img class="group_items_image" width="50px" src="{{ group?.avatar == '' || group?.avatar == undefined ? 'assets/volunteer.png' : group?.avatar }}" alt="image" />
       </div>
       <div class="content">
         <div class="item">
