@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'kube-config'
 
 jobs:
   docker:
