@@ -13,6 +13,7 @@ export class ConstantsService {
 
   };
   public DEFAULT_LOCATION = { lat: 10.762622, lng: 106.660172 }
+  public DEFAULT_REQUEST_COLOR='oranged'
   public MAP_PRIORITY = this.mapPriority;
   public REQUEST_STATUS = new Map<string, IBaseStatus>();
   public SUPPORT_STATUS = new Map<string, IBaseStatus>();
