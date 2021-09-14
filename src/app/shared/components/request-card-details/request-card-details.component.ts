@@ -288,7 +288,7 @@ export class JoinRequestComponent {
     this.joinRequest.type = this.group_type;
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-    this.joinRequest.supporter_id = this.group_type === 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
+    this.joinRequest.supporter_id = this.group_type == 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest
