@@ -50,14 +50,14 @@ export class RequestCardDetailsComponent implements OnInit {
   status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>; 
   mapSupportStatus!: Map<string, IBaseStatus>;
-  mapPriority: any;
+  mapPriority: any
   news: INew[] = [];
   user: any;
   create_time:string='';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: '',
+    subject: 'new_comment',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
