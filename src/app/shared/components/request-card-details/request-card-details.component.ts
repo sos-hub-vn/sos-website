@@ -77,7 +77,7 @@ export class RequestCardDetailsComponent implements OnInit {
       action: action,
       bookmarker_id: this.user.id,
     }).subscribe((res) => {
-      if (action == 'bookmark') {
+      if (action === 'bookmark') {
         console.log(true);
         this.request!.is_bookmarked = true;
       } else {
@@ -102,7 +102,7 @@ export class RequestCardDetailsComponent implements OnInit {
     private generalService: GeneralService,
     private s3Service: S3Service
   ) {
-    if (this.request.status === 'open') {
+    if (this.isOpen = this.request.status === 'open') {
       this.isOpen = true;
     }
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
@@ -288,7 +288,7 @@ export class JoinRequestComponent {
     this.joinRequest.type = this.group_type;
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-    this.joinRequest.supporter_id = this.group_type == 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
+    this.joinRequest.supporter_id = this.group_type === 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest
