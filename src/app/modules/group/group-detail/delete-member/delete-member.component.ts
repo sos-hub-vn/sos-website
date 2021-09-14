@@ -5,15 +5,15 @@ import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
-  selector: 'app-delete-group',
-  templateUrl: './delete-group.component.html',
-  styleUrls: ['./delete-group.component.scss']
+  selector: 'app-delete-member',
+  templateUrl: './delete-member.component.html',
+  styleUrls: ['./delete-member.component.scss']
 })
-export class DeleteGroupComponent implements OnInit {
+export class DeleteMemberComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public group: any,
-    private _dialogRef: MatDialogRef<DeleteGroupComponent>,
+    private _dialogRef: MatDialogRef<DeleteMemberComponent>,
     private GroupService: VolunteerGroupService,
     private router: Router,
     private notification: NotificationService,
@@ -26,14 +26,22 @@ export class DeleteGroupComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  async deleteGroup(){
-    this.GroupService.delete(this.group.id).subscribe((data: any) => {
+  async deleteMember(){
+    let data = {
+      "members": [
+        {
+          "id": this.group.memberId,
+        },
+      ],
+    };
+    this.GroupService.removeMemberGroup(this.group.id, data).subscribe((data: any) => {
       if(data){
-        this.notification.success("Xoá nhóm thành công");
+        this.notification.success("Xoá thành công");
         this._dialogRef.close({data: data});
         return;
       }
-      this.notification.error("Xoá nhóm thất bại");
-    });
+      this.notification.error("Xoá thất bại");
+    })
   }
+
 }
