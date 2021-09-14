@@ -4,7 +4,7 @@ import { JoinedComponent } from './joined/joined.component';
 import { CreatedComponent } from './created/created.component';
 import { SuggestedComponent } from './suggested/suggested.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FormControl, NgForm } from '@angular/forms';
+import { FormControl, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import {
@@ -64,7 +64,8 @@ const routes: Routes = [
     FormsModule,
     MatTabsModule,
     MatBadgeModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
 })
 export class UrgentRequestModule { }

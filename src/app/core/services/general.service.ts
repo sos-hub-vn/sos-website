@@ -27,7 +27,7 @@ export class GeneralService {
       ;
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
-    if (d < 1) return `${d * 1000} m`; else return `${d.toPrecision(2)} km`
+    if (d < 1) return `${(d * 1000).toFixed(0)} m`; else return `${d.toFixed(1)} km`
   }
 
   deg2rad(deg: number) {

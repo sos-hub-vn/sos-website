@@ -165,12 +165,12 @@ interface IRequesterObjectStatus {
   content_type?: string;
   group?: string;
   id?: string;
-  key: string;
+  key?: string;
   name?: string;
   order?: number;
-  type: string;
+  type?: string;
   value?: string;
-  value_obj: object;
+  value_obj?: object;
 }
 interface ISupportType {
   name?: string;
