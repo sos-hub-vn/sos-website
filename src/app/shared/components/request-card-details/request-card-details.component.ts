@@ -122,7 +122,7 @@ export class RequestCardDetailsComponent implements OnInit {
   }
 
   show(data: any) {
-    let content = data.target.value;
+    let content = data.value;
     if (!this.storageService.userInfo) {
       this.notification.error("Hãy đăng nhập hoặc đăng kí để được bình luận")
       return
