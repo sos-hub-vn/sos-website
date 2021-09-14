@@ -114,29 +114,53 @@ a {
       left: 15px;
       bottom: 15px;
       position: absolute;
+<<<<<<< HEAD
       display: none;
+=======
+>>>>>>> 0f2f653ff03211525c96b9a7cad8df9668f6e85e
     }
     .fileUpload{
       position: absolute;
       right: 15px;
       top: 15px;
+<<<<<<< HEAD
       display: none;
       overflow: hidden;
       input.upload {
         position: absolute;
         top: 0;
         right: -348px;
+=======
+      input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+>>>>>>> 0f2f653ff03211525c96b9a7cad8df9668f6e85e
         margin: 0;
         padding: 0;
         font-size: 20px;
         cursor: pointer;
         opacity: 0;
         filter: alpha(opacity=0);
+<<<<<<< HEAD
         transform: rotate(180deg);
       }
       span{
         font-size: 15px;
         cursor: pointer;
+=======
+        width: 25px;
+      }
+      .btn--browse {
+        color: #000000;
+        font-size: 14px;
+        text-decoration: underline;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+>>>>>>> 0f2f653ff03211525c96b9a7cad8df9668f6e85e
       }
     }
     .preFile{
@@ -160,6 +184,7 @@ a {
         width: 100%;
       }
     }
+<<<<<<< HEAD
     &.active{
       height: 200px;
       button{
@@ -169,5 +194,7 @@ a {
         display: block;
       }
     }
+=======
+>>>>>>> 0f2f653ff03211525c96b9a7cad8df9668f6e85e
   }
 }
