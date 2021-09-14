@@ -56,13 +56,16 @@ export class ResetPasswordFrameComponent implements OnInit, OnDestroy {
     this.usersService.forgotPassword(this.storageService.userInfo, {}).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
+      this.phoneFormGroup.get('phoneNumber')?.setErrors(null);
       this.goToNextStep();
       this.storageService.userInfo = {
         ...this.storageService.userInfo,
         confirm_code: res.confirm_code
       };
       this.startOtpTimer();
-    }, console.error);
+    }, err => {
+      this.phoneFormGroup.get('phoneNumber')?.setErrors({ 'not_exist': true });
+    });
   }
 
   confirmOTP(values: { otp: string }) {
@@ -79,6 +82,8 @@ export class ResetPasswordFrameComponent implements OnInit, OnDestroy {
           return 'Chưa nhập số điện thoại';
         } else if (this.phoneFormGroup.get('phoneNumber')?.hasError('pattern')) {
           return 'Số điện thoại không đúng';
+        } else if (this.phoneFormGroup.get('phoneNumber')?.hasError('not_exist')) {
+          return 'Số điện thoại không tồn tại';
         }
         break;
       case 'otp':
@@ -135,7 +140,7 @@ export class ResetPasswordFrameComponent implements OnInit, OnDestroy {
         confirm_code: res.confirm_code
       };
       this.startOtpTimer();
-    }, error => console.error(error));
+    }, console.error);
   }
 
   resetPassword(values: { password: string, confirm_password: string }) {
