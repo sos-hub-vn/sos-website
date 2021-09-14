@@ -109,6 +109,7 @@ export class RequestContainerComponent implements OnInit {
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
+  
   search() {
     this.queryObject = {
       ...this.filterObject,

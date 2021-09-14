@@ -20,6 +20,7 @@ import { UpdatePhoneComponent } from './group-detail/update-phone/update-phone.c
 import { UpdateSupportComponent } from './group-detail/update-support/update-support.component';
 import { DeleteGroupComponent } from './group-detail/delete-group/delete-group.component';
 import { SearchMemberComponent } from './group-detail/search-member/search-member.component';
+import { DeleteMemberComponent } from './group-detail/delete-member/delete-member.component';
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [GroupComponent, GroupDetailComponent, CreateGroupComponent, UpdateAddressComponent, UpdateNameComponent, UpdatePhoneComponent, UpdateSupportComponent, DeleteGroupComponent, SearchMemberComponent],
+  declarations: [GroupComponent, GroupDetailComponent, CreateGroupComponent, UpdateAddressComponent, UpdateNameComponent, UpdatePhoneComponent, UpdateSupportComponent, DeleteGroupComponent, SearchMemberComponent, DeleteMemberComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
