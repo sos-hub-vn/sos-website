@@ -27,8 +27,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.scss'],
 })
-export class RequestFormComponent implements OnInit, OnDestroy {
-  @ViewChild('content') private myScrollContainer!: ElementRef;
+export class RequestFormComponent implements OnInit {
   public formProfile: FormGroup = new FormGroup({
     name: new FormControl(''),
     phone_number: new FormControl(''),
@@ -94,8 +93,7 @@ export class RequestFormComponent implements OnInit, OnDestroy {
     data.requester_type = 'guest';
     data.medias = this.medias;
     const user = this.StorageService.userInfo;
-    console.log(user, user !== null)
-    if (user !== null && user?.role !== 'GUEST') {
+    if (user!= null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
@@ -184,7 +182,6 @@ export class RequestFormComponent implements OnInit, OnDestroy {
     }
   }
   onFilePicked(event: any) {
-
     this.onPickFile = true;
     console.log(event.target.files[0])
     let file = event.target.files[0]
@@ -194,7 +191,6 @@ export class RequestFormComponent implements OnInit, OnDestroy {
         url: res
       }]
       this.onPickFile = false;
-
     })
   }
 

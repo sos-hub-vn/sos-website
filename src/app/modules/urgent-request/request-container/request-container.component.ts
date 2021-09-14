@@ -114,7 +114,6 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
-
   search() {
     this.queryObject = {
       ...this.filterObject,

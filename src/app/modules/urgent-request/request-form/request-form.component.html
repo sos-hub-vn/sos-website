@@ -107,7 +107,7 @@
         class="img-wrap">
         <button type="button" (click)="deleteImg(i)">
           <mat-icon>cancel</mat-icon>
-        </button>
+        </button> 
         <div *ngIf="item.mime_type !== 'video'"><img width="100%" src="{{item.url}}" alt=""></div>
         <div *ngIf="item.mime_type === 'video'">
           <video width="100%">
@@ -118,7 +118,6 @@
     </div>
   </div>
   <br />
-
   <div mat-dialog-actions class="submit-btn">
     <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form,isAccepted)" cdkFocusInitial>
       Gửi yêu cầu

@@ -182,6 +182,7 @@ export class RequestCardDetailsComponent implements OnInit {
   confirmStatus(): void {
     this.UrgentRequestService.verifyRequest(this.request.id, {
       status: 'verified',
+      note: ''
     }).subscribe(res => this.request = res);
   }
   openTransDialog(): void {

@@ -54,6 +54,7 @@ a {
   text-decoration-thickness: 2px;
   cursor: pointer;
 }
+<<<<<<< HEAD
 
 
 @media screen and (max-width: 599px) {
@@ -83,4 +84,23 @@ a {
   border-radius: 20px;
 }
 
+=======
+@media screen and (max-width: 599px) {
+  .info_section {
+    width: 100% !important;
+  }
+}
 
+.mat-chip{
+  background-color:#FCE7E5 ;
+}
+>>>>>>> 5207b6dbdb36ee16ffd018e5f06bfa5e868da2e4
+
+.circle {
+  font-size: 10px;
+  height: 10px;
+  width: 20px !important;
+}
+.status-btn{
+  border-radius: 20px;
+}
