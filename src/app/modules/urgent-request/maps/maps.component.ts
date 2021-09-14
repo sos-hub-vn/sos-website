@@ -37,7 +37,7 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, 
+  constructor(private StorageService: StorageService,
     private bottomsheet: MatBottomSheet) {
     console.log(this.requests);
   }
@@ -70,7 +70,7 @@ export class MapsComponent implements OnInit, OnChanges {
     console.log(this.requests);
     this.loader.load().then(() => {
       this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: this.StorageService.getLocation(),
+        center: this.StorageService.location,
         zoom: 15,
         styles: environment.mapStyle,
       });
