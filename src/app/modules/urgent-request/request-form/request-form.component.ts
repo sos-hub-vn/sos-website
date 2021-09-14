@@ -24,7 +24,6 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
-  @ViewChild('content') private myScrollContainer!: ElementRef;
   public formProfile: FormGroup = new FormGroup({
     name: new FormControl(''),
     phone_number: new FormControl(''),
