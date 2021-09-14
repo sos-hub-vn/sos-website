@@ -10,6 +10,7 @@ import { UpdateNameComponent } from './update-name/update-name.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
 import { UpdateSupportComponent } from './update-support/update-support.component';
 import { S3Service } from "../../../core/services/s3.service";
+import { DeleteMemberComponent } from './delete-member/delete-member.component';
 
 @Component({
   selector: 'app-group-detail',
@@ -128,20 +129,17 @@ export class GroupDetailComponent implements OnInit {
   }
 
   removeMember(groupId: any, memberId: any) {
-    let data = {
-      "members": [
-        {
-          "id": memberId,
-        },
-      ],
-    };
-    this.GroupService.removeMemberGroup(groupId, data).subscribe((data: any) => {
-      if(data){
-        this.notification.success("Xoá thành công");
-        this.group.members = data.data.members;
-        return;
+    this.dialog.open(DeleteMemberComponent, {
+      panelClass: 'deleteMember',
+      disableClose: true,
+      data: {
+        memberId: memberId,
+        id: groupId,
+      },
+    }).afterClosed().subscribe((result: any)=>{
+      if(result){
+        this.group.members = result.data.data.members;
       }
-      this.notification.error("Xoá thất bại");
     })
   }
 
