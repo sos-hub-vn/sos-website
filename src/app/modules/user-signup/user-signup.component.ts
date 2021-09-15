@@ -118,18 +118,15 @@ export class UserSignupComponent implements OnInit {
     this.UsersService.resendCode(this.user!, {}).subscribe(
       (result) => {
         console.log(result);
-
       },
       error => { console.log(error); }
     );
   }
   onConfirm(event: any, user: IUser) {
-    console.log(user);
     this.user!.confirm_code = user.confirm_code;
     this.UsersService.confirm(this.user!, {}).subscribe(
       (result) => {
         this.user = result;
-        console.log(this.user);
         this.isValidOTP = true;
         this.stepper.next();
       },
@@ -145,7 +142,6 @@ export class UserSignupComponent implements OnInit {
     this.UsersService.updateProfile(userInfo, {}).subscribe(
       (result) => {
         this.user = result;
-        console.log(this.user);
       },
       error => { console.log(error); }, () => {
         this.UsersService.getProfile().subscribe((result) => { this.router.navigateByUrl('/home') })

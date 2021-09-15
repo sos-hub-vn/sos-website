@@ -48,16 +48,12 @@ export class LoginFrameComponent implements OnInit {
   onSubmit(values: { numberphone: string; password: string }) {
     this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
       this.userService.getProfile().subscribe((result) => {
-        console.log("signin res");
-        console.log(result);
         this.user = result;
         this.onClose();
 
       }, (err) => { console.log(err); }, () => {
-        console.log("navigate");
-        this.router.navigateByUrl('/urgentRequest', { skipLocationChange: true });
+        this.router.navigateByUrl('/urgentRequest');
       })
-
     },(err)=>{this.notificationService.error('Sai số điện thoại hoặc mật khẩu')})
   }
 
