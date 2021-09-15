@@ -11,8 +11,8 @@ export class CreatedComponent implements OnInit {
   userCreatedRequests: ISOSRequest[] = [];
   @Input() user_id: string = '';
   session: string;
-  constructor(private UrgentRequestService: UrgentRequestService, private ConstantsService: ConstantsService) {
-    this.session = this.ConstantsService.SESSION.CREATED_REQUESTS
+  constructor(private urgentRequestService: UrgentRequestService, private constantsService: ConstantsService) {
+    this.session = this.constantsService.SESSION.CREATED_REQUESTS
   }
   params: IQueryPrams = {}
   paramsInit() {
@@ -29,7 +29,7 @@ export class CreatedComponent implements OnInit {
   }
   load() {
     if (this.params.limit != 0)
-      this.UrgentRequestService.getByRequesterId(this.user_id, this.params).subscribe((result) => {
+      this.urgentRequestService.getByRequesterId(this.user_id, this.params).subscribe((result) => {
         this.userCreatedRequests = [...this.userCreatedRequests, ...result];
         this.updateParams(result.length);
       });
