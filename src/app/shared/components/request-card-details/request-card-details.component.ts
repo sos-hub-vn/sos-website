@@ -32,6 +32,7 @@ import { NotificationService } from '../notification/notification.service';
 import * as dayjs from 'dayjs';
 import { group } from '@angular/animations';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { S3Service } from 'src/app/core/services/s3.service';
 
 @Component({
   selector: 'app-request-card-details',
@@ -39,29 +40,25 @@ import { MatMenuTrigger } from '@angular/material/menu';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
-
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
   supporters: any[] = [];
-  lastestComment: { content: string; postTime: string; }[] | undefined;
-
+  lastestComment: { content: string; postTime: string }[] | undefined;
+  request: ISOSRequest;
   new_status: String = '';
-  cur_status?: String = this.request.status;
+  cur_status?: String;
   isOpen: boolean = false;
-  status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>;
   mapSupportStatus!: Map<string, IBaseStatus>;
-  mapPriority: any
+  mapPriority: any;
   news: INew[] = [];
   user: any;
   create_time: string = '';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
-  defaultComment: INew = {
-    subject: 'new_comment',
-    content: '',
-    target_type: 'sos_request',
-    target_id: this.request.id,
-  };
+  defaultComment: INew;
+  preUploadFile: any;
+  file: any;
+  isActive: boolean = false;
   onClose() {
     this.bottomRef.dismiss(this.request);
   }
@@ -69,16 +66,24 @@ export class RequestCardDetailsComponent implements OnInit {
     console.log(action);
     $event.stopPropagation();
     $event.preventDefault();
-    this.UrgentRequestService.markRequest(this.request?.id,
-      { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
-      .subscribe((res) => {
-        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
-      })
+    this.UrgentRequestService.markRequest(this.request?.id, {
+      bookmarker_type: 'user',
+      action: action,
+      bookmarker_id: this.user.id,
+    }).subscribe((res) => {
+      if (action === 'bookmark') {
+        console.log(true);
+        this.request!.is_bookmarked = true;
+      } else {
+        console.log('else');
+        this.request!.is_bookmarked = false;
+      }
+    });
   }
 
   constructor(
     public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { request: ISOSRequest, session: string },
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
@@ -88,9 +93,19 @@ export class RequestCardDetailsComponent implements OnInit {
     private ConstantsService: ConstantsService,
     private storageService: StorageService,
     private notification: NotificationService,
-    private generalService: GeneralService
+    private generalService: GeneralService,
+    private s3Service: S3Service
   ) {
-    if (this.request.status === 'open') {
+    this.request = data.request
+    this.cur_status = this.request.status
+    this.defaultComment = {
+      subject: 'new_comment',
+      content: '',
+      medias: [],
+      target_type: 'sos_request',
+      target_id: this.request.id,
+    };
+    if (this.isOpen = this.request.status === 'open') {
       this.isOpen = true;
     }
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
@@ -99,18 +114,46 @@ export class RequestCardDetailsComponent implements OnInit {
     this.initalize();
     this.fetchInit();
   }
+
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.preUploadFile = event.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
   show(data: any) {
-    let content = data.target.value;
+    let content = data.value;
     if (!this.storageService.userInfo) {
       this.notification.error("Hãy đăng nhập hoặc đăng kí để được bình luận")
       return
     }
-    if (content)
-      this.NewsService.create(
-        { ...this.defaultComment, content: content },
-        {}
-      ).subscribe((res) => (this.news = [res, ...this.news]));
-    data.target.value = '';
+    if (content) {
+      if (!this.preUploadFile) {
+        this.NewsService.create(
+          { ...this.defaultComment, content: content },
+          {}
+        ).subscribe((res) => (this.news = [res, ...this.news]));
+      }
+      else {
+        this.s3Service.uploadImage(this.file).subscribe((res) => {
+          if (res) {
+            let fetchData = {
+              mime_type: 'image',
+              url: res
+            }
+            this.NewsService.create(
+              { ...this.defaultComment, content: content, medias: [fetchData] },
+              {}
+            ).subscribe((res) => (this.news = [res, ...this.news]));
+          }
+        });
+      }
+    }
+    data.value = '';
+    this.preUploadFile = null;
   }
   fetchInit() {
     this.SupportTransService.getRequestTrans(this.request.id).subscribe(
@@ -121,16 +164,18 @@ export class RequestCardDetailsComponent implements OnInit {
     );
   }
   initalize() {
-    this.mapPriority = this.ConstantsService.MAP_PRIORITY
-    this.mapStatus = this.ConstantsService.REQUEST_STATUS
+    this.mapPriority = this.ConstantsService.MAP_PRIORITY;
+    if (!!!this.data.session) this.data.session = this.ConstantsService.SESSION.DEFAULT;
+    this.mapStatus = this.ConstantsService.MAP_SESSION_STATUS.get(this.data.session)!;
   }
+
   openDialog(): void {
     if (!this.StorageService.token) {
-      this.notification.error("Đăng nhập hoặc đăng kí để tham gia.")
-      return
+      this.notification.error('Đăng nhập hoặc đăng kí để tham gia.');
+      return;
     }
     const dialogRef = this.dialog.open(JoinRequestComponent, {
-      data: { request_id: this.request.id }
+      data: { request_id: this.request.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -149,7 +194,7 @@ export class RequestCardDetailsComponent implements OnInit {
   }
 
   getStatusString(map: Map<string, IBaseStatus>): string {
-    return map.get(this.request?.status || '')?.status || ''
+    return map.get(this.request?.status || '')?.status || '';
   }
   updateRequestStatus(item: string) {
     console.log(this.mapStatus.get(item))
@@ -182,8 +227,7 @@ export class RequestCardDetailsComponent implements OnInit {
   confirmStatus(): void {
     this.UrgentRequestService.verifyRequest(this.request.id, {
       status: 'verified',
-      note: ''
-    }).subscribe(res => this.request = res);
+    }).subscribe((res) => (this.request = res));
   }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
@@ -253,7 +297,7 @@ export class JoinRequestComponent {
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest
-    ).subscribe(result => {
+    ).subscribe((result) => {
       this.dialogRef.close(result);
     });
   }

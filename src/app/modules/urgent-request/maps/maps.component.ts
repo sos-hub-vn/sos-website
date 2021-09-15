@@ -38,7 +38,7 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, private ConstantsService:ConstantsService,
+  constructor(private StorageService: StorageService, private ConstantsService: ConstantsService,
     private bottomsheet: MatBottomSheet) {
     console.log(this.requests);
   }
@@ -84,7 +84,7 @@ export class MapsComponent implements OnInit, OnChanges {
 
   chooseRequest(request: ISOSRequest) {
     const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
-      data: request,
+      data: { request, session: this.ConstantsService.SESSION.MAP_REQUESTS },
     });
   }
   ngOnChanges(changes: SimpleChanges): void {

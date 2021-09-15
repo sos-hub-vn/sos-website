@@ -1,3 +1,4 @@
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -9,7 +10,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CreatedComponent implements OnInit {
   userCreatedRequests: ISOSRequest[] = [];
   @Input() user_id: string = '';
-  constructor(private UrgentRequestService: UrgentRequestService) { }
+  session: string;
+  constructor(private UrgentRequestService: UrgentRequestService, private ConstantsService: ConstantsService) {
+    this.session = this.ConstantsService.SESSION.CREATED_REQUESTS
+  }
   params: IQueryPrams = {}
   paramsInit() {
     this.params = { limit: 20, offset: 0 }
