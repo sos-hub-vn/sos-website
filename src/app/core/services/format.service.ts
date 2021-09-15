@@ -7,7 +7,7 @@ export class FormatService {
   constructor() {}
 
   format(array?: any[]) {
-    if (array === undefined) {
+    if (!array) {
       return array;
     } else {
       for (let i = 0; i < array!.length; i++) {
