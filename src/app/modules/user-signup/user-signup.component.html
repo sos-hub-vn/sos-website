@@ -4,8 +4,7 @@
         <mat-icon>close</mat-icon>
       </span></h1>
     <mat-stepper [linear]="isLinear" #stepper>
-
-      <!-- <mat-step [stepControl]="firstFormGroup" label="Tài khoản">
+      <mat-step [stepControl]="firstFormGroup" label="Tài khoản">
         <form [formGroup]="firstFormGroup" (ngSubmit)="AccountSetupSubmit(firstFormGroup.value)">
           <sos-input formControlName="phone_number" type="tel" label="Số điện thoại" [required]="true"
             [error]="getError('phone')" [minlength]="10"></sos-input>
@@ -21,7 +20,7 @@
             </button>
           </div>
         </form>
-      </mat-step> -->
+      </mat-step>
       <mat-step [stepControl]="secondFormGroup" label="Xác thực OTP">
         <form [formGroup]="secondFormGroup">
           <sos-input formControlName="confirm_code" type="text" label="Mã xác nhận" [required]="true"
