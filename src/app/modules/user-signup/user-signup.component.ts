@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { RequesterObjectStatusService } from './../../core/http/requester-object-status.service';
 import { UsersService } from './../../core/http/users.service';
 
@@ -26,7 +27,9 @@ export class UserSignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private UsersService: UsersService,
     private router: Router,
-    public dialogRef: MatDialogRef<UserSignupComponent>
+    public dialogRef: MatDialogRef<UserSignupComponent>,
+    private NotificationService: NotificationService
+
   ) { }
 
   createForm() {
@@ -45,19 +48,19 @@ export class UserSignupComponent implements OnInit {
       address: [''],
       last_name: ['']
     });
-    }
-    onClose() {
-      this.dialogRef.close();
-    }
-    password(formGroup: FormGroup) {
-      const password = formGroup.get('password')?.value;
-      const confirmPassword = formGroup.get('confirm_password')?.value;
-      return password === confirmPassword ? null : { passwordNotMatch: true };
-    }
-    getError(el: any) {
-      switch (el) {
-        case 'phone':
-          if (this.firstFormGroup.get('phone_number')?.hasError('required')) {
+  }
+  onClose() {
+    this.dialogRef.close();
+  }
+  password(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirm_password')?.value;
+    return password === confirmPassword ? null : { passwordNotMatch: true };
+  }
+  getError(el: any) {
+    switch (el) {
+      case 'phone':
+        if (this.firstFormGroup.get('phone_number')?.hasError('required')) {
           return 'Yêu cầu nhập số điện thoại';
         }
         if (this.firstFormGroup.get('phone_number')?.hasError('minlength')) {
@@ -99,7 +102,7 @@ export class UserSignupComponent implements OnInit {
   }
 
   AccountSetupSubmit(user: IUser) {
-  
+
 
     this.UsersService.create({ phone_number: user.phone_number, password: user.password, debug: "true" }, {}).subscribe(
       (result) => {
@@ -128,23 +131,28 @@ export class UserSignupComponent implements OnInit {
         this.user = result;
         console.log(this.user);
         this.isValidOTP = true;
-        this.stepper.next()
+        this.stepper.next();
       },
-      error => { this.isValidOTP = false; }
+      error => { this.isValidOTP = false; },
+      () => {
+        this.UsersService.getProfile().subscribe((res) => { console.log(res); })
+        this.NotificationService.success('Tạo tài khoản thành công');
+      }
     );
   }
   finished(userInfo: IUser) {
     userInfo.phone_number = this.user.phone_number;
-
     this.UsersService.updateProfile(userInfo, {}).subscribe(
       (result) => {
         this.user = result;
         console.log(this.user);
       },
-      error => { console.log(error); }
+      error => { console.log(error); }, () => {
+        this.UsersService.getProfile().subscribe((result) => { this.router.navigateByUrl('/home') })
+
+      }
     );
-    console.log(this.user);
-    this.router.navigateByUrl('/home');
+
   }
   ngOnInit(): void {
 

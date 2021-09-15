@@ -1,3 +1,5 @@
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { ResetPasswordFrameComponent } from './../reset-password-frame/reset-password-frame.component';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +9,7 @@ import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
 import { DialogService } from '../../../core/services/dialog.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'login-frame',
@@ -27,7 +30,8 @@ export class LoginFrameComponent implements OnInit {
     private router: Router,
     private userService: UsersService,
     public dialogRef: MatDialogRef<LoginFrameComponent>,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -44,11 +48,17 @@ export class LoginFrameComponent implements OnInit {
   onSubmit(values: { numberphone: string; password: string }) {
     this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
       this.userService.getProfile().subscribe((result) => {
+        console.log("signin res");
+        console.log(result);
         this.user = result;
         this.onClose();
+
+      }, (err) => { console.log(err); }, () => {
+        console.log("navigate");
+        this.router.navigateByUrl('/urgentRequest', { skipLocationChange: true });
       })
-      this.router.navigateByUrl('/home');
-    })
+
+    },(err)=>{this.notificationService.error('Sai số điện thoại hoặc mật khẩu')})
   }
 
   getError(el: any) {
