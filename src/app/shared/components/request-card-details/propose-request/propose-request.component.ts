@@ -45,7 +45,6 @@ export class ProposeRequestComponent implements OnInit {
   async onSubmit(data: any) {
     data.target_type = 'group';
     data.target_id = data.target_id
-    console.log(data, this.data.request_id);
     this.UrgentRequestService.propose(this.data.request_id, data).subscribe(
       (result) => {
         this.notification.success("Đã đề xuất cho nhóm")
