@@ -1,12 +1,13 @@
 import { ResetPasswordFrameComponent } from './../reset-password-frame/reset-password-frame.component';
-import { Input } from '@angular/core';
+import { Inject, Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
 import { DialogService } from '../../../core/services/dialog.service';
+import { UserSignupComponent } from 'src/app/modules/user-signup/user-signup.component';
 
 @Component({
   selector: 'login-frame',
@@ -15,6 +16,7 @@ import { DialogService } from '../../../core/services/dialog.service';
 })
 export class LoginFrameComponent implements OnInit {
   formGroup!: FormGroup;
+  isError: boolean = false;
   hide = true;
   isShow: boolean = false;
   regex = '(84|0[3|5|7|8|9])+([0-9]{8})';
@@ -22,13 +24,15 @@ export class LoginFrameComponent implements OnInit {
   @Input() isDialog: boolean = true;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public phone: number,
     private formBuilder: FormBuilder,
     private authenService: AuthenService,
     private router: Router,
     private userService: UsersService,
     public dialogRef: MatDialogRef<LoginFrameComponent>,
-    private dialogService: DialogService
-  ) { }
+    private dialogService: DialogService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -36,19 +40,25 @@ export class LoginFrameComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      numberphone: ['', [Validators.required, Validators.pattern(this.regex)]],
+      numberphone: [this.phone ? this.phone : '', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
     });
   }
 
   onSubmit(values: { numberphone: string; password: string }) {
-    this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
-      this.userService.getProfile().subscribe((result) => {
-        this.user = result;
-        this.onClose();
-      })
-      this.router.navigateByUrl('/home');
-    })
+    this.authenService.signin(values.numberphone, values.password).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.userService.getProfile().subscribe((result) => {
+          this.user = result;
+          this.onClose();
+        });
+        this.router.navigateByUrl('/urgentRequest');
+      },
+      (error) => {
+        this.isError = true;
+      }
+    );
   }
 
   getError(el: any) {
@@ -82,6 +92,17 @@ export class LoginFrameComponent implements OnInit {
 
   openResetPassDialog() {
     this.dialogRef.close();
-    this.dialogService.openDialog(ResetPasswordFrameComponent, { panelClass: 'reset-password-frame-dialog', width: '100%', maxWidth: '585px' });
+    this.dialogService.openDialog(ResetPasswordFrameComponent, {
+      panelClass: 'reset-password-frame-dialog',
+      width: '100%',
+      maxWidth: '585px',
+    });
+  }
+
+  signup(){
+    this.dialogRef.close();
+    this.dialog.open(UserSignupComponent, {
+      panelClass: 'dialog-responsive'
+    });
   }
 }
