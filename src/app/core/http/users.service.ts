@@ -37,6 +37,7 @@ export class UsersService extends RestService<IUser> {
         map((res) => {
           this.StorageService.userInfo = res.data;
           this.userSubject.next(res.data)
+          this.getProfile().subscribe();  //received object different form getProfile(); 
           return res.data;
         })
       );
