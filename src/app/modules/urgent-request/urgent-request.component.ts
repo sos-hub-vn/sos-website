@@ -12,6 +12,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UsersService } from 'src/app/core/http/users.service';
 
 @Component({
   selector: 'app-urgent-request',
@@ -24,13 +25,17 @@ export class UrgentRequestComponent implements OnInit {
   mobileScreen: string = "MAP"
   constructor(
 
-    private StorageService: StorageService
+    private StorageService: StorageService, private userService: UsersService
   ) { }
   toggleMap() {
-    if (this.mobileScreen==='MAP') this.mobileScreen="REQUESTS"; else this.mobileScreen='MAP'
+    if (this.mobileScreen === 'MAP') this.mobileScreen = "REQUESTS"; else this.mobileScreen = 'MAP'
   }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
+    this.userService.userSubject.subscribe({
+      next: (user) => { this.user = user; console.log(user) }
+    });
+
 
   }
 }

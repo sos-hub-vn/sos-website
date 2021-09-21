@@ -9,10 +9,11 @@ import { RestService } from './rest.service';
   providedIn: 'root',
 })
 export class UsersService extends RestService<IUser> {
+  userSubject = new Subject<IUser>();
   constructor(http: HttpClient, private StorageService: StorageService, private authService: AuthenService) {
     super(http, 'users');
   }
-  userSubject = new Subject<IUser>();
+
 
   confirm(body: IUser, options: any): Observable<any> {
     return this.http
