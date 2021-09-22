@@ -100,6 +100,10 @@ export class ContainerComponent implements OnInit {
     this.authService.logout();
     window.location.reload();
   }
+
+  getShortName(fullName: string) { 
+    return fullName.split(' ').map(n => n[0]).join('');
+  }
 }
 type SideItem = {
   name: string;
