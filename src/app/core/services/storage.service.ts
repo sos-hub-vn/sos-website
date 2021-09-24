@@ -15,7 +15,7 @@ export class StorageService {
     if (result) {
       return JSON.parse(result);
     }
-    return this.constant.DEFAULT_LOCATION;
+    return this.constant.DEFAULT_LOCATION.HoChiMinh;
   }
   public set location(value: any | undefined) {
     if (value) {
