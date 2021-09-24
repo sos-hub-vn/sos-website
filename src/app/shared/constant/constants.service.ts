@@ -9,7 +9,7 @@ export class ConstantsService {
     AMIN_INFO: 'admin_info',
     USER_INFO: 'user_info',
     AUTH_TOKEN: 'token',
-    LOCATION: 'location',
+    LOCATION: 'location'
   };
   public SESSION = {
     CREATED_REQUESTS: 'created_requests',
@@ -21,7 +21,11 @@ export class ConstantsService {
     DEFAULT: 'default',
   };
   public MAP_SESSION_STATUS = new Map<string, Map<string, IBaseStatus>>();
-  public DEFAULT_LOCATION = { lat: 10.762622, lng: 106.660172 };
+  public DEFAULT_LOCATION = {
+    HoChiMinh: { lat: 10.762622, lng: 106.660172 },
+    DaNang: { lat: 16.047079, lng: 108.206230 },
+    CanTho: { lat: 10.045162, lng: 105.746857 }
+  };
   public DEFAULT_REQUEST_COLOR = 'oranged';
   public MAP_PRIORITY = this.mapPriority;
   public REQUEST_STATUS = new Map<string, IBaseStatus>();

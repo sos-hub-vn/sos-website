@@ -37,13 +37,11 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   };
   queryObject: any = {};
   subscription: Subscription | undefined
-
+  subscriptionLocation: Subscription | undefined
   constructor(public dialog: MatDialog,
-    private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
-    private RequestStatusService: RequestStatusService,
     private RequesterObjectStatusService: RequesterObjectStatusService,
     private LocationService: LocationService,
     private constantsService: ConstantsService,
@@ -173,11 +171,18 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.setLocation(this.StorageService.location);
-    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    this.subscriptionLocation = this.StorageService.locationSubject.subscribe({
+      next: (location) => { this.setLocation(location); this.search() } // detect city change
+    })
+    this.subscription = this.LocationService.locationSubject.subscribe({
+      next: (location: ILocation) => { this.setLocation(location); this.search() } //detect current location change
+    })
     this.LocationService.updateLocation();
+
     this.search();
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.subscriptionLocation?.unsubscribe();
   }
 }

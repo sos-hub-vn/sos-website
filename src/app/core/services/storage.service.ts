@@ -28,6 +28,7 @@ export class StorageService {
   }
 
 
+
   public get userInfo(): any | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.USER_INFO);
     if (result) {
