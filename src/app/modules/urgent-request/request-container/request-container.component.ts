@@ -10,6 +10,7 @@ import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestFormComponent } from '../request-form/request-form.component';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 @Component({
   selector: 'all-request-container',
@@ -19,7 +20,7 @@ import { RequestFormComponent } from '../request-form/request-form.component';
 export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
-  urgentLevels: IPriorityType[] = [];
+  session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
@@ -36,6 +37,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   };
   queryObject: any = {};
   subscription: Subscription | undefined
+
   constructor(public dialog: MatDialog,
     private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
@@ -43,10 +45,11 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     private SupportTypesService: SupportTypesService,
     private RequestStatusService: RequestStatusService,
     private RequesterObjectStatusService: RequesterObjectStatusService,
-    private LocationService: LocationService
+    private LocationService: LocationService,
+    private constantsService: ConstantsService,
   ) {
-    this.statuses = RequestStatusService.getRequestStatus();
-    this.urgentLevels = UrgentLevelService.getUrgentLevels();
+    this.statuses = this.constantsService.STATUS_LIST
+    this.session = this.constantsService.SESSION.DEFAULT
     this.fetchInit();
   }
 
@@ -161,7 +164,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       if (!result) {
         return
       }
-      this.requests = this.requests?[result, ...this.requests]:[result]
+      this.requests = this.requests ? [result, ...this.requests] : [result]
     });
   }
   setLocation(data: any) {
