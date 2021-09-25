@@ -9,33 +9,40 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UsersService } from 'src/app/core/http/users.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-urgent-request',
   templateUrl: './urgent-request.component.html',
   styleUrls: ['./urgent-request.component.scss'],
 })
-export class UrgentRequestComponent implements OnInit {
+export class UrgentRequestComponent implements OnInit, OnDestroy {
   requests: ISOSRequest[] = [];
   user: any;
   mobileScreen: string = "MAP"
+  subscriptionUser: Subscription | undefined
+  
   constructor(
 
     private StorageService: StorageService, private userService: UsersService
   ) { }
+  ngOnDestroy(): void {
+    this.subscriptionUser?.unsubscribe();
+    
+  }
   toggleMap() {
     if (this.mobileScreen === 'MAP') this.mobileScreen = "REQUESTS"; else this.mobileScreen = 'MAP'
   }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
-    this.userService.userSubject.subscribe({
+    this.subscriptionUser = this.userService.userSubject.subscribe({
       next: (user) => { this.user = user; console.log(user) }
     });
-
-
+   
   }
+
 }
