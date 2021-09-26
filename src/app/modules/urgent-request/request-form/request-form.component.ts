@@ -71,8 +71,7 @@ export class RequestFormComponent implements OnInit {
     this.requestForm = new FormGroup({
       contact_info: new FormGroup({
         name: new FormControl(''),
-        phone_number: new FormControl(''),
-        address: new FormControl(''),
+        phone_number: new FormControl('')
       }),
       address_info: new FormGroup({
         district_code: new FormControl(''),
@@ -84,7 +83,7 @@ export class RequestFormComponent implements OnInit {
       requester_object_status: new FormControl(''),
       subject: new FormControl(''),
       support_types: new FormControl(''),
-      // share_phone_numbber: new FormControl('private'),
+      share_phone_numbber: new FormControl('private'),
     });
     console.log(data.request)
 
@@ -106,7 +105,7 @@ export class RequestFormComponent implements OnInit {
         description: this.data.request.description,
         requester_object_status: this.data.request.requester_object_status,
         subject: this.data.request.subject,
-        support_types: this.data.request.support_types,
+        // support_types: this.data.request.support_types,
       })
       this.medias = this.data.request.medias!;
       this.location = this.data.request.location!;
@@ -126,12 +125,12 @@ export class RequestFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.setLocation(this.storageService?.location);
-    this.subscription = this.locationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    if (this.data.action != 'update') {
+      this.setLocation(this.storageService?.location);
+      this.subscription = this.storageService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    }
     this.user = this.storageService.userInfo;
     this.formInit();
-
     console.log(this.requestForm.value)
   }
 
@@ -145,15 +144,15 @@ export class RequestFormComponent implements OnInit {
     });
     this.SupportTypesService.findAll().subscribe((result) => {
       this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
-      let temp: ISupportType[] = [];
-      if (this.data.action == 'update') {
-        this.supportTypes.forEach(x => {
-          this.data.request.support_types?.forEach(xx => {
-            if (x.type == xx.type) temp.push(x);
-          })
-        })
-        this.requestForm.patchValue({ support_types: temp })
-      }
+      // let temp: ISupportType[] = [];
+      // if (this.data.action == 'update') {
+      //   this.supportTypes.forEach(x => {
+      //     this.data.request.support_types?.forEach(xx => {
+      //       if (x.type == xx.type) temp.push(x);
+      //     })
+      //   })
+      //   this.requestForm.patchValue({ support_types: temp })
+      // }
 
 
 
@@ -175,8 +174,10 @@ export class RequestFormComponent implements OnInit {
   }
   onSubmit() {
     let request: ISOSRequest = this.requestForm.value;
+    console.log(this.requestForm.value)
     request.requester_type = 'guest';
     request.medias = this.medias;
+    request.share_phone_numbber = 'public'
 
     if (this.user != null && this.user?.role !== 'GUEST') {
       request.requester_type = 'user';
@@ -184,13 +185,17 @@ export class RequestFormComponent implements OnInit {
     }
     request.location = this.location;
     console.log(request);
-    if (this.data.action === 'update') return this.show(this.requestForm);
+    if (this.data.action === 'update') return this.UrgentRequestService.update(this.data.request.id!, request, {}).subscribe(res => {
+      this.notificationService.success("Cập nhật thành công")
+      this.onClose(res)
+      this.checkProfile(res)
+    });
     this.UrgentRequestService.create(request, {}).subscribe(res => {
       this.notificationService.success("Yêu cầu của bạn đã được tạo thành công")
       this.onClose(res)
       this.checkProfile(res)
     });
-
+    return;
   }
 
   checkProfile(data: ISOSRequest) {
@@ -225,8 +230,8 @@ export class RequestFormComponent implements OnInit {
   }
 
   checkSubmit(isAccepted: any) {
-    console.log(this.requestForm.value);
-    (isAccepted._checked && !this.onPickFile) ? this.onSubmit() : this.notificationService.error("Bạn cần điền đầy đủ thông tin")
+    console.log(this.requestForm.valid);
+    (isAccepted._checked && this.requestForm.valid && !this.onPickFile) ? this.onSubmit() : this.notificationService.error("Bạn cần điền đầy đủ thông tin")
   }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {

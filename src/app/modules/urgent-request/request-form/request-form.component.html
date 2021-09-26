@@ -16,7 +16,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
+    <mat-form-field *ngIf="this.data.action!='update'" class="example-full-width" appearance="outline">
       <mat-label>Loại yêu cầu</mat-label>
       <mat-select formControlName="support_types" multiple>
         <mat-option *ngFor="let type of supportTypes" [value]="type">
@@ -56,7 +56,7 @@
     </fieldset>
 
     <fieldset formGroupName="address_info">
-      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-form-field class="example-full-width" appearance="outline" required>
         <mat-label>Tỉnh/ Thành Phố</mat-label>
         <mat-select formControlName="province_id" required>
           <mat-option *ngFor="let province of provinces" [value]="province.id" (click)="getProvince(province.id)">

@@ -8,7 +8,6 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { AuthenService } from 'src/app/core/http/authen.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { LocationService } from 'src/app/shared/subjects/location.service';
 
 @Component({
   selector: 'app-container',
@@ -30,7 +29,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     private storage: StorageService,
-    private locationService: LocationService,
     private authService: AuthenService,
     private provinceService: ProvinceService,
     private formBuilder: FormBuilder
