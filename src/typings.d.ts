@@ -199,7 +199,7 @@ interface ISOSRequest {
   created_time?: Date;
   id?: string;
   location?: string;
-  requester_info?: string;
+  requester_info?: any;
   status?: string;
   supporters?: [];
   updated_by?: string;
