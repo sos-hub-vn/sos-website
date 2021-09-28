@@ -88,7 +88,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.provinceForm.get('province')?.valueChanges.pipe(
       takeUntil(this.destroy$)
     ).subscribe((province) => {
-      console.log("ádasdasdasdasdasdasdas")
       if (this.isInitialized == false) {
         this.isInitialized = true;
         if (!!this.storage.last_location) {

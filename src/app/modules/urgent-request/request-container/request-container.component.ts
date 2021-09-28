@@ -137,7 +137,11 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
         if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
         else this.requests = result.sos_requests;
         this.requestsChange.emit(this.requests);
+        console.log(this.params.offset)
         this.updateParams(result.total);
+        console.log(this.requests)
+        console.log(result);
+
       });
   }
   select($event: any) {

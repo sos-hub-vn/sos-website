@@ -25,7 +25,6 @@ export class StorageService {
         this.constant.STORAGE_KEY.LOCATION,
         JSON.stringify(value)
       );
-      console.log("next")
       this.locationSubject.next(value)
     }
   }
