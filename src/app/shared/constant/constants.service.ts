@@ -9,7 +9,8 @@ export class ConstantsService {
     AMIN_INFO: 'admin_info',
     USER_INFO: 'user_info',
     AUTH_TOKEN: 'token',
-    LOCATION: 'location'
+    LOCATION: 'location',
+    LAST_LOCATION: 'last_location',
   };
   public SESSION = {
     CREATED_REQUESTS: 'created_requests',
@@ -84,8 +85,8 @@ export class ConstantsService {
       action_view: 'Hoàn thành',
       status: 'resolved',
       status_view: 'Đã giải quyết',
-      next_step: [],
-    });
+      next_step: ['re-open']
+    })
     this.REQUEST_STATUS.set('open', {
       action: 'open',
       action_view: 'Mở',
@@ -167,8 +168,8 @@ export class ConstantsService {
       action_view: 'Hoàn thành',
       status: 'resolved',
       status_view: 'Đã hoàn thành',
-      next_step: [],
-    });
+      next_step: ['re-open']
+    })
 
     this.SUPPORT_STATUS.set('pending', {
       action: 'pending',

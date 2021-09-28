@@ -181,12 +181,20 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     console.log("INITTT")
-    this.setLocation(this.StorageService.location);
-
+    console.log(this.StorageService.location)
+    if (this.StorageService.location) {
+      this.setLocation(this.StorageService.location); this.search();
+    }
     this.subscription = this.StorageService.locationSubject.subscribe({
-      next: (location: ILocation) => { this.setLocation(location); console.log("location", location); this.search() } //detect current location change
+      next: (location: ILocation) => {
+        console.log("asdasd")
+        this.setLocation(location); console.log("location", location); this.search()
+      }
     })
-   
+    // this.subscription = this.StorageService.locationSubject.subscribe({
+    //   next: (location: ILocation) => { this.setLocation(location); console.log("location", location); this.search() } //detect current location change
+    // })
+
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
