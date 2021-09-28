@@ -121,7 +121,8 @@ export class RequestCardDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: { action: 'update', request: this.request },
-      disableClose: true
+      disableClose: true,
+      maxWidth: '100vw'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -278,7 +279,7 @@ export class RequestCardDetailsComponent implements OnInit {
     const RLocation = this.request?.location?.split(',')
     const CLocation = this.StorageService.location;
     this.distance = this.generalService.getDistanceFromLatLonInKm(parseFloat(RLocation![0]), parseFloat(RLocation![1]), CLocation.lat, CLocation.lng);
-    this.editable = this.data.request.requester_info.id === this.user.id
+    this.editable = this.data.request?.requester_info?.id === this.user?.id
   }
 }
 @Component({

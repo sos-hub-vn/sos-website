@@ -88,20 +88,23 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.provinceForm.get('province')?.valueChanges.pipe(
       takeUntil(this.destroy$)
     ).subscribe((province) => {
+      console.log("ádasdasdasdasdasdasdas")
       if (this.isInitialized == false) {
         this.isInitialized = true;
         if (!!this.storage.last_location) {
           this.currentLocation = this.storage.last_location;
           const currentProvince: IProvince = {
-            id: 'currentLocation', name: 'Vị trí cuối cùng', default_location: `${this.currentLocation.lat},${this.currentLocation.lng}`
+            id: 'currentLocation', name: 'Vị trí hiện tại', default_location: `${this.currentLocation.lat},${this.currentLocation.lng}`
           }
           this.provinces = [currentProvince, ...this.provinces];
-          this.provinceForm.get('province')?.setValue(currentProvince);
+          this.provinceForm.get('province')?.setValue(currentProvince, { emitEvent: false });
+
           return;
         }
       }
       const coordinates = province.default_location.split(',');
       const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
+      console.log("city")
       this.storage.location = location;
       console.log(province)
 
@@ -123,7 +126,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
   loginPopup(): void {
     const dialogRef = this.dialog.open(
       LoginFrameComponent,
-      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px' }
+      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px ' }
     );
     dialogRef.afterClosed().subscribe((result: any) => {
       this.checkLogin();
