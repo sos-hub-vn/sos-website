@@ -68,13 +68,10 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
       },
     });
   }
-<<<<<<< HEAD
-=======
   onPickNewLocation(event:google.maps.LatLng){
     this._pickedSearchLocation = event;
   }
   isCanPick(event: boolean){
     this._isCanPick = event;
   }
->>>>>>> 2e92ef3e2e83300912e34c45bfc79a76539e0108
 }
