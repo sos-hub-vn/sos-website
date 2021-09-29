@@ -5,6 +5,7 @@ import { SignupComponent } from './modules/signup/signup.component';
 import { ContainerComponent } from './modules/container/container.component';
 import { AuthGuard } from './core/guards';
 import { UserLoginComponent } from './modules/user-login/user-login.component';
+import {ProfileComponent } from './modules/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/group/group.module').then((m) => m.GroupModule),
       },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
       // {
       //   path: 'blocked',
       //   loadChildren: () =>
@@ -65,7 +70,7 @@ const routes: Routes = [
           ),
       },
 
-      { path: '**', redirectTo: 'urgentRequest' }
+      { path: '**', redirectTo: 'urgentRequest' },
     ],
   },
   // { path: '**', redirectTo: 'login' },
