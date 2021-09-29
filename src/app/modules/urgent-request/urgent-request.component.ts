@@ -24,8 +24,11 @@ import { LocationService } from 'src/app/shared/subjects/location.service';
 export class UrgentRequestComponent implements OnInit, OnDestroy {
   requests: ISOSRequest[] = [];
   user: any;
-  mobileScreen: string = 'MAP';
-  subscriptionUser: Subscription | undefined;
+  mobileScreen: string = "MAP"
+  subscriptionUser: Subscription | undefined
+  _isCanPick = false;
+  _pickedSearchLocation?: google.maps.LatLng;
+
 
   constructor(
     public dialog: MatDialog,
@@ -65,4 +68,13 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
       },
     });
   }
+<<<<<<< HEAD
+=======
+  onPickNewLocation(event:google.maps.LatLng){
+    this._pickedSearchLocation = event;
+  }
+  isCanPick(event: boolean){
+    this._isCanPick = event;
+  }
+>>>>>>> 2e92ef3e2e83300912e34c45bfc79a76539e0108
 }
