@@ -44,7 +44,6 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
     this.locationService.updateLocation();
-    // console.log("upload to location")
     this.subscriptionUser = this.userService.userSubject.subscribe({
       next: (user) => { this.user = user; console.log(user) }
     });

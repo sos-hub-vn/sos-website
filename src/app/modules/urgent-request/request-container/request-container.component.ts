@@ -29,6 +29,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
   @Output() isMapPicked = new EventEmitter<boolean>();
   _isPicked = false;
+  isLoading = false;
   session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
@@ -141,7 +142,8 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.load();
   }
   load() {
-
+    if (this.isLoading) return;
+    this.isLoading = true;
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
         if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
@@ -151,7 +153,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
         this.updateParams(result.total);
         console.log(this.requests)
         console.log(result);
-
+        this.isLoading = false;
       });
   }
   select($event: any) {
@@ -191,6 +193,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     console.log("INITTT")
+    this.setLocation(this.StorageService.location)
     this.search();
     // this.locationService.updateLocation();
     console.log(this.StorageService.location)
