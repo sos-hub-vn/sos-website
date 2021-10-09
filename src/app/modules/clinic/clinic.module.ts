@@ -25,6 +25,7 @@ import { RequestFormComponent } from '../urgent-request/request-form/request-for
 import { SuggestForComponent } from '../urgent-request/suggest-for/suggest-for.component';
 import { SuggestedComponent } from '../urgent-request/suggested/suggested.component';
 import { UrgentRequestComponent } from '../urgent-request/urgent-request.component';
+import { ClinicContainerComponent } from './clinic-container/clinic-container.component';
 
 const routes: Routes = [
   {
@@ -35,8 +36,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ClinicComponent
-
+    ClinicComponent,
+    ClinicContainerComponent
+    
   ],
   imports: [
     CommonModule,

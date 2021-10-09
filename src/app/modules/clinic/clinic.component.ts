@@ -13,7 +13,7 @@ import { RequestFormComponent } from '../urgent-request/request-form/request-for
 })
 export class ClinicComponent implements OnInit, OnDestroy {
 
-  requests: ISOSRequest[] = [];
+  clinics: IGroup[] = [];
   user: any;
   mobileScreen: string = "MAP"
   subscriptionUser: Subscription | undefined
@@ -42,11 +42,11 @@ export class ClinicComponent implements OnInit, OnDestroy {
       if (!result) {
         return;
       }
-      this.requests = this.requests ? [result, ...this.requests] : [result];
+      this.clinics = this.clinics ? [result, ...this.clinics] : [result];
     });
   }
   toggleMap() {
-    if (this.mobileScreen === 'MAP') this.mobileScreen = 'REQUESTS';
+    if (this.mobileScreen === 'MAP') this.mobileScreen = 'CLINICS';
     else this.mobileScreen = 'MAP';
   }
   ngOnInit(): void {

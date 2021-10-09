@@ -11,17 +11,17 @@ export class GroupService extends RestService<IGroup>{
   constructor(http: HttpClient) {
     super(http, 'group');
   }
-  search(body: any): Observable<{
-    sos_requests: IGroup[];
+  search(body: any, queryParams?: IQueryPrams): Observable<{
+    groups: IGroup[];
     total: number;
   }> {
     return this.http
       .post<{
         data: {
-          sos_requests: IGroup[];
+          groups: IGroup[];
           total: number;
         };
-      }>(`${this.host}/groups/search`, body)
+      }>(`${this.host}/groups/search`, body, { params: { ...queryParams } })
       .pipe(map((res) => res.data));
   }
 }
