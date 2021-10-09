@@ -367,3 +367,22 @@ interface IBaseStatus {
   bg_color?: string
   icon?: string
 }
+interface IGroup {
+  type: string;
+  name: string;
+  location?: string;
+  avatar?: string;
+  address_info?: IAddressInfo;
+  contact_info?: IContacInfo;
+  confirm_code?: string;
+  detail_info?: Object;
+  description?: string;
+}
+interface IGroupSearchObject {
+  lat_position?: string;
+  long_position?: string;
+  keyword?: string;
+  distance: number;
+  type: string;
+  verify_status: string;
+}
