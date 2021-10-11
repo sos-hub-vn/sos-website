@@ -51,7 +51,7 @@ export class ClinicComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.user = this.storage.userInfo;
-    this.locationService.updateLocation();
+    // this.locationService.updateLocation();
     this.subscriptionUser = this.userService.userSubject.subscribe({
       next: (user) => {
         this.user = user;

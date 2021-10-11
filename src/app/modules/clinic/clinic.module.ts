@@ -20,12 +20,14 @@ import { RequestContainerComponent } from 'src/app/shared/components/request-con
 import { BookmarkedComponent } from '../urgent-request/bookmarked/bookmarked.component';
 import { CreatedComponent } from '../urgent-request/created/created.component';
 import { JoinedComponent } from '../urgent-request/joined/joined.component';
-import { MapsComponent } from '../urgent-request/maps/maps.component';
+
 import { RequestFormComponent } from '../urgent-request/request-form/request-form.component';
 import { SuggestForComponent } from '../urgent-request/suggest-for/suggest-for.component';
 import { SuggestedComponent } from '../urgent-request/suggested/suggested.component';
 import { UrgentRequestComponent } from '../urgent-request/urgent-request.component';
 import { ClinicContainerComponent } from './clinic-container/clinic-container.component';
+import { ClinicMapComponent } from './clinic-map/clinic-map.component';
+
 
 const routes: Routes = [
   {
@@ -37,8 +39,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ClinicComponent,
-    ClinicContainerComponent
-    
+    ClinicContainerComponent,
+    ClinicMapComponent,
+
+
   ],
   imports: [
     CommonModule,

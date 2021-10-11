@@ -8,7 +8,7 @@ import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { LocationService } from 'src/app/shared/subjects/location.service';
 
 @Component({
-  selector: 'app-clinic-container',
+  selector: 'all-clinic-container',
   templateUrl: './clinic-container.component.html',
   styleUrls: ['./clinic-container.component.scss']
 })
@@ -29,16 +29,13 @@ export class ClinicContainerComponent implements OnInit, OnDestroy {
   statuses: IRequestStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
   LIMIT = 20;
-  filterObject: IRequestFilter = {
+  filterObject: IGroupSearchObject = {
     lat_position: 0,
     long_position: 0,
     distance: 10,
-    priority_type: [],
     keyword: '',
-    object_status: [],
-    status: [],
-    support_types: [],
-    verify_status: ''
+    verify_status: [],
+    type: 'tram_y_te'
   };
   queryObject: any = {};
   subscription: Subscription | undefined
@@ -63,47 +60,18 @@ export class ClinicContainerComponent implements OnInit, OnDestroy {
     if (returnNumber < this.LIMIT) this.params.limit = 0; else
       this.params.offset! += this.LIMIT;
   }
-  selectPriority(type: string, $event: any) {
-    this.select($event);
-    const index: number = this.filterObject.priority_type?.indexOf(type)!;
-
-    if (index != -1 && index != undefined)
-      this.filterObject.priority_type?.splice(index, 1);
-    else this.filterObject.priority_type?.push(type);
-    console.log(this.filterObject.priority_type!);
-    this.search();
-  }
   searchClick(data: any) {
     this.filterObject.keyword = data.value;
     this.search();
   }
-  selectSupportType(type: string, $event: any) {
-    this.select($event);
-    const index: number = this.filterObject.support_types?.indexOf(type)!;
-
-    if (index != -1 && index != undefined)
-      this.filterObject.support_types?.splice(index, 1);
-    else this.filterObject.support_types?.push(type);
-    this.search();
-  }
   selectStatus(type: string, $event: any) {
     this.select($event);
-    const index: number = this.filterObject.status?.indexOf(type)!;
+    const index: number = this.filterObject.verify_status?.indexOf(type)!;
 
     if (index != -1 && index != undefined)
-      this.filterObject.status?.splice(index, 1);
-    else this.filterObject.status?.push(type);
-    console.log(this.filterObject.status!);
-    this.search();
-  }
-  selectObject(type: string, $event: any) {
-    this.select($event);
-    const index: number = this.filterObject.object_status?.indexOf(type)!;
-
-    if (index != -1 && index != undefined)
-      this.filterObject.object_status?.splice(index, 1);
-    else this.filterObject.object_status?.push(type);
-    console.log(this.filterObject.object_status!);
+      this.filterObject.verify_status?.splice(index, 1);
+    else this.filterObject.verify_status?.push(type);
+    console.log(this.filterObject.verify_status!);
     this.search();
   }
   selectDistance(dis: number) {
@@ -122,18 +90,16 @@ export class ClinicContainerComponent implements OnInit, OnDestroy {
 
     this.clinics = [];
 
-    if (this.filterObject.status?.find(e => e === 'verified')) {
-      this.filterObject.status = this.filterObject.status.filter(e => e != 'verified')
-      this.filterObject = { ...this.filterObject, verify_status: 'verified' }
+    if (this.filterObject.verify_status?.find(e => e === 'verified')) {
+      this.filterObject.verify_status = this.filterObject.verify_status.filter(e => e != 'verified')
+      this.filterObject = { ...this.filterObject }
     }
 
 
     this.queryObject = {
       ...this.filterObject,
-      status: this.filterObject.status?.toString(),
-      object_status: this.filterObject.object_status?.toString(),
-      support_types: this.filterObject.support_types?.toString(),
-      priority_type: this.filterObject.priority_type?.toString(),
+      verify_status: this.filterObject.verify_status?.toString(),
+
     };
     this.paramsInit();
 
@@ -161,22 +127,6 @@ export class ClinicContainerComponent implements OnInit, OnDestroy {
   }
   fetchInit() {
   }
-
-  // openCreateForm(): void {
-  //   const dialogRef = this.dialog.open(RequestFormComponent, {
-  //     width: 'auto',
-  //     data: {},
-  //     disableClose: true,
-  //     maxWidth: '100vw'
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (!result) {
-  //       return
-  //     }
-  //     this.requests = this.requests ? [result, ...this.requests] : [result]
-  //   });
-  // }
   setLocation(data: any) {
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();

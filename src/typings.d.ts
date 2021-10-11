@@ -368,6 +368,7 @@ interface IBaseStatus {
   icon?: string
 }
 interface IGroup {
+  id?: string;
   type: string;
   name: string;
   location?: string;
@@ -375,14 +376,19 @@ interface IGroup {
   address_info?: IAddressInfo;
   contact_info?: IContacInfo;
   confirm_code?: string;
-  detail_info?: Object;
+  detail_info?: {
+    support_types?: ISupportType[];
+  };
   description?: string;
+  admin_id?: string;
+  created_time?: Date;
+  verify_status?: string;
 }
 interface IGroupSearchObject {
-  lat_position?: string;
-  long_position?: string;
+  lat_position: number;
+  long_position: number;
   keyword?: string;
   distance: number;
   type: string;
-  verify_status: string;
+  verify_status: string[];
 }
