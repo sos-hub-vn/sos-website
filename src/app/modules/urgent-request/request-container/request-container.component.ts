@@ -131,9 +131,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
 
     this.requests = [];
 
-    if (this.filterObject.status?.find(e => e === 'verified')) {
+    if (this.filterObject.status?.find(e => e === 'verified') ){
       this.filterObject.status = this.filterObject.status.filter(e => e != 'verified')
-      this.filterObject = { ...this.filterObject, verify_status: 'verified' }
+      this.filterObject = {...this.filterObject,  verify_status: 'verified'}
     }
 
 
@@ -148,7 +148,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
 
     this.load(isReload);
   }
-  load(isReload?: boolean) {
+  load(isReload?:boolean) {
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
         if (this.params.offset != 0 && !isReload) this.requests = [...this.requests!, ...result.sos_requests];
@@ -158,7 +158,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
         this.updateParams(result.total);
         console.log(this.requests)
         console.log(result);
-
+       
       });
   }
   select($event: any) {

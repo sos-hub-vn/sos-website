@@ -27,9 +27,9 @@ import { LocationService } from 'src/app/shared/subjects/location.service';
 })
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() requests?: ISOSRequest[];
-  @Input() set selectLocationMode(value: boolean) {
+  @Input() set selectLocationMode(value: boolean){
     this._selectLocationMode = value;
-    if (this.selectorMarker) {
+    if(this.selectorMarker){
       this.selectorMarker.setVisible(value)
     }
   };
@@ -92,7 +92,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
         this.addMarker(request, this.chooseRequest.bind(this));
       });
 
-      this.choseLocationMarker();
+    this.choseLocationMarker();
     });
     this.subscription = this.storageService.locationSubject.subscribe({
       next: (location: ILocation) => {
@@ -122,7 +122,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  choseLocationMarker() {
+  choseLocationMarker(){
     var marker = new google.maps.Marker({
       position: this.storageService.location,
       map: this.map,
@@ -132,7 +132,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
     google.maps.event.addListener(marker, 'dragend', () => {
       const location = marker.getPosition()
-      if (location) {
+      if(location){
         this.pickedLocation.next(location)
       }
     });
