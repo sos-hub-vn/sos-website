@@ -1,4 +1,4 @@
-name: publish
+name: publish-eks
 
 on:
   workflow_dispatch:
