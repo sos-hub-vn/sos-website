@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { AuthenService } from 'src/app/core/http/authen.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { LocationService } from 'src/app/shared/subjects/location.service';
 import { Router } from '@angular/router';
 
 @Component({
