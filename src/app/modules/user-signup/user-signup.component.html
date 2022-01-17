@@ -9,7 +9,7 @@
         <form [formGroup]="firstFormGroup" (ngSubmit)="AccountSetupSubmit(firstFormGroup.value)">
           <sos-input formControlName="phone_number" type="tel" label="Số điện thoại" [required]="true"
             [error]="getError('phone')" [minlength]="10"></sos-input>
-          <p *ngIf="isPhoneInUsed" style="font-size: small; color: red;">Số điện thoại đã được sử dụng!</p>
+          <p *ngIf="isPhoneInUsed" style="font-size: small; color: red;">Số điện thoại hoặc mật khẩu không đúng!</p>
           <sos-input formControlName="password" type="password" label="Mật khẩu" [required]="true"
             [error]="getError('password')" [minlength]="8"></sos-input>
           <sos-input formControlName="confirm_password" type="password" label="Nhập lại mật khẩu" [required]="true"
@@ -26,7 +26,8 @@
         <form [formGroup]="secondFormGroup">
           <sos-input formControlName="confirm_code" type="text" label="Mã xác nhận" [required]="true"
             [error]="getError('confirm_code')"> </sos-input>
-          <button mat-flat-button (click)='onResend()' style=" float:right;  margin-top: -65px; margin-right: 15px;">Gửi lại</button>
+          <button mat-flat-button (click)='onResend()'
+            style=" float:right;  margin-top: -65px; margin-right: 15px;">Gửi lại</button>
           <!-- <p>Mã xác nhận: {{user.confirm_code}}</p> -->
           <p *ngIf="isValidOTP==false">Mã không chính xác</p>
           <app-nda (acceptEvent)=checkAccept($event)></app-nda>
