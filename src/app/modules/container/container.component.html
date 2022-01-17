@@ -51,7 +51,7 @@
     <div class="drawer-footer">
       <div class="logg" *ngIf="!loginSuccess">
         <p (click)="loginPopup();">ĐĂNG NHẬP</p>
-        <p>ĐĂNG KÍ</p>
+        <p (click)="openSignupDialog()" >ĐĂNG KÍ</p>
       </div>
       <div class="logg" *ngIf="loginSuccess" (click)="gotoProfile()">
         <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
