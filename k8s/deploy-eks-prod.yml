@@ -92,39 +92,27 @@ kind: Ingress
 metadata:
   name: nginx-ingress-prod
   annotations:
+    kubernetes.io/ingress.class: alb
     nginx.ingress.kubernetes.io/rewrite-target: /
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:864185773574:certificate/9d6baee7-f865-4ae5-b0e4-b74374d775c6
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
 spec:
   rules:
     - http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: nginx-prod
-                port:
-                  number: 80
----
-##################################################################################################
-#  Elastic load balancer
-##################################################################################################
-apiVersion: v1
-kind: Service
-metadata: 
-  name: nginx-deployment-prod-lb-svc
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-    #service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-087d3daabe878b4c0
-    #service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0b4e867ab622a3b7a
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-southeast-1:864185773574:certificate/9d6baee7-f865-4ae5-b0e4-b74374d775c6
-spec: 
-  type: LoadBalancer
-  selector:   
-    app: nginx
-  ports:  
-    - name: nginx-deployment-prod-svc-443-80
-      port: 443
-      protocol: TCP
-      targetPort: 80
+         - path: /
+           pathType: Prefix
+           backend:
+             service:
+               name: ssl-redirect
+               port: 
+                 name: use-annotation
+         - path: /
+           pathType: Prefix
+           backend:
+             service: 
+               name: nginx-prod
+               port: 
+                 number: 80
